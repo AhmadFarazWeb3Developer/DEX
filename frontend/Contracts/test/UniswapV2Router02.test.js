@@ -15,7 +15,7 @@ describe("UniswapV2Router02", () => {
   };
 
   describe("Router Interaction", function () {
-    let factory, feeToSetter, Dai, Usdt;
+    let factory, feeToSetter, Dai, Usdt, router;
     beforeEach(async () => {
       ({ factory, feeToSetter, Dai, Usdt, router } = await loadFixture(
         deployUniswapV2Router02Fixture
@@ -24,8 +24,11 @@ describe("UniswapV2Router02", () => {
 
     it("Should create pair for me", async () => {
       const { myAddress } = await ethers.getSigners();
+      
+      router.addLiquidity(Dai, Usdt, 10, 10, 2, 2, myAddress, 10000);
 
-      router.addLiquidity(Dai, Usdt, 10, 10, 2, 2, myAddress, 1000);
+
+
     });
   });
 });
