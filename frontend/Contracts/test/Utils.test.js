@@ -1,14 +1,33 @@
-import { ethers } from "ethers";
+import hre from "hardhat";
+
+const { ethers } = hre;
 
 const UtilsTest = async () => {
-  const [factoryOwner] = await ethers.getSigners();
+  const [feeToSetter] = await ethers.getSigners();
 
-  const UniswapV2Factory = await ethers.getContractFactory("UniswapV2Factory");
-  const pair = await ethers.getContractFactory("UniswapV2Pair");
+  // Getting Contracts
+  const UniswapV2Factory = await ethers.getContractFactory(
+    "UniswapV2FactoryMain"
+  );
 
-  const factory = UniswapV2Factory.deploy(factoryOwner);
+  const UniswapV2Router02 = await ethers.getContractFactory(
+    "UniswapV2Router02"
+  );
 
-  return { factory, factoryOwner };
+  const DaiMock = await ethers.getContractFactory("DaiMock");
+  const UsdtMock = await ethers.getContractFactory("UsdtMock");
+  const WethMock = await ethers.getContractFactory("WethMock");
+
+  // Deploying
+  const Dai = await DaiMock.deploy();  
+  const Usdt = await UsdtMock.deploy();
+  
+  const Weth = await WethMock.deploy();
+
+  const factory = await UniswapV2Factory.deploy(feeToSetter.address);
+
+  const router = await UniswapV2Router02.deploy(factory.target, Weth.target);
+  return { factory, feeToSetter, Dai, Weth, Usdt, router };
 };
 
 export default UtilsTest;
