@@ -20,6 +20,9 @@ interface IUniswapV2Pair {
         address to,
         bytes calldata data
     ) external;
+
+    function burn(address to) external returns (uint amount0, uint amount1);
+
     function getReserves()
         external
         view
@@ -109,6 +112,35 @@ contract UniswapV2Router02Mock {
             amountOut >= amountOutMin,
             "RouterMock: INSUFFICIENT_OUTPUT_AMOUNT"
         );
+    }
+
+    // Remove liquidity from a real pair
+    function removeLiquidity(
+        address tokenA,
+        address tokenB,
+        uint liquidity,
+        uint, // amountAMin
+        uint, // amountBMin
+        address to,
+        uint // deadline
+    ) external returns (uint amountA, uint amountB) {
+        address pair = IUniswapV2Factory(factory).getPair(tokenA, tokenB);
+        require(pair != address(0), "RouterMock: PAIR_NOT_FOUND");
+
+        // Transfer LP tokens from user to the pair
+        IERC20(pair).transferFrom(msg.sender, pair, liquidity);
+
+        // Burn LP tokens -> this sends back tokenA and tokenB
+        (uint amount0, uint amount1) = IUniswapV2Pair(pair).burn(to);
+
+        // Sort output amounts depending on token ordering
+        if (tokenA < tokenB) {
+            (amountA, amountB) = (amount0, amount1);
+        } else {
+            (amountA, amountB) = (amount1, amount0);
+        }
+
+        return (amountA, amountB);
     }
 
     // Simple AMM formula

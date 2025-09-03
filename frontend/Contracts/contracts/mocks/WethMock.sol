@@ -5,5 +5,12 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
 
 contract WethMock is ERC20, ERC20Detailed {
-    constructor() public ERC20Detailed("WethMock", "WETH", 18) {}
+    constructor(
+        uint256 _initalSupply
+    ) public ERC20Detailed("WethMock", "WETH", 18) {
+        _mint(address(this), _initalSupply);
+    }
+    function transferTokens(address _to, uint256 _amount) public {
+        _transfer(address(this), _to, _amount);
+    }
 }

@@ -17,10 +17,11 @@ const UtilsTest = async () => {
   const WethMock = await ethers.getContractFactory("WethMock");
 
   // Deploying
-  const Dai = await DaiMock.deploy();
-  const Usdt = await UsdtMock.deploy();
 
-  const Weth = await WethMock.deploy();
+  const INITIAL_SUPPLY = ethers.parseUnits("1000000", 18); // 1M
+  const Dai = await DaiMock.deploy(INITIAL_SUPPLY);
+  const Usdt = await UsdtMock.deploy(INITIAL_SUPPLY);
+  const Weth = await WethMock.deploy(INITIAL_SUPPLY);
 
   const factory = await UniswapV2Factory.deploy(feeToSetter.address);
 
