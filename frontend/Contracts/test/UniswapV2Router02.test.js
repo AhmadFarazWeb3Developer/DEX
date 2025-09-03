@@ -118,6 +118,50 @@ describe("UniswapV2Router02", () => {
       console.log("After : ", await pair.balanceOf(myAddress.address));
     });
 
-    it("should swap token for another token", async () => {});
+    it("should swap token for another token", async () => {
+      const [myAddress] = await ethers.getSigners();
+      const bigLiquidity = ethers.parseUnits("1000", 18);
+
+      await Dai.transferTokens(myAddress.address, bigLiquidity);
+      await Usdt.transferTokens(myAddress.address, bigLiquidity);
+
+      await Dai.connect(myAddress).approve(router.target, bigLiquidity);
+      await Usdt.connect(myAddress).approve(router.target, bigLiquidity);
+
+      // First Add Liquidity
+      await router.addLiquidity(
+        Dai.target,
+        Usdt.target,
+        bigLiquidity,
+        bigLiquidity,
+        0,
+        0,
+        myAddress.address,
+        0
+      );
+
+      const swapAmount = ethers.parseUnits("10", 18);
+
+      await Dai.transferTokens(myAddress.address, swapAmount);
+      await Dai.connect(myAddress).approve(router.target, swapAmount);
+
+      console.log("Dai before:", await Dai.balanceOf(myAddress.address));
+      console.log("Usdt before:", await Usdt.balanceOf(myAddress.address));
+
+      await router.swapExactTokensForTokens(
+        swapAmount,
+        0,
+        [Dai.target, Usdt.target],
+        myAddress.address,
+        0
+      );
+
+      console.log("Dai after:", await Dai.balanceOf(myAddress.address));
+      console.log("Usdt after:", await Usdt.balanceOf(myAddress.address));
+    });
+
+
+
+    
   });
 });
