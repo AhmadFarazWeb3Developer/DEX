@@ -1,1 +1,11 @@
+@font-face {
+  font-family: "Chypre";
+  src: url("../assets//fonts/Chypre-NorReg.otf");
+  font-weight: normal;
+}
 @import "tailwindcss";
+
+@theme {
+  --font-chypre: "Chypre", sans-serif;
+  --letter-spacing-wide: 0.1em;
+}
