@@ -3,8 +3,7 @@ import {
   loadFixture,
 } from "@nomicfoundation/hardhat-toolbox/network-helpers.js";
 
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs.js";
-import { expect, should } from "chai";
+
 
 import UtilsTest from "./Utils.test.js";
 
@@ -46,16 +45,7 @@ describe("UniswapV2Router02", () => {
         0
       );
 
-      // const receipt = await tx.wait();
-      // for (const log of receipt.logs) {
-      //   try {
-      //     const parsed = factory.interface.parseLog(log);
-      //     console.log("name: ", parsed.name);
-      //     console.log("logs", parsed.args);
-      //   } catch (error) {}
-      // }
-
-      // console.log(await factory.allPairsLength());
+     
       const myPairAddress = await factory.getPair(Dai.target, Usdt.target);
 
       const UniswapV2Pair = await ethers.getContractFactory("UniswapV2Pair");

@@ -30,25 +30,6 @@ describe("UniswapV2FactoryTest", function () {
       // only factory can createPair
       const createPairTx = await factory.createPair(Dai.target, Usdt.target);
       expect(await factory.allPairsLength()).to.be.eq(1);
-
-      /*
-      const receipt = await createPairTx.wait();
-      // Parse logs
-      for (const log of receipt.logs) {
-        try {
-          const parsed = factory.interface.parseLog(log);
-          console.log("Event:", parsed.name);
-          console.log("Args:", parsed.args);
-        } catch (err) {}
-      }
-
-      const pairsLength = await factory.allPairsLength();
-
-      for (let i = 0; i < pairsLength; i++) {
-        const pair = await factory.allPairs(i);
-        console.log(pair);
-      }
-        */
     });
 
     it("Should create pair for me", async () => {
