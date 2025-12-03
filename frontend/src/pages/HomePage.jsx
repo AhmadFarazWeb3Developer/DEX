@@ -10,7 +10,7 @@ import {
 
 const HomePage = () => {
   return (
-    <div className="w-full  ">
+    <div className="w-full">
       <Navbar />
 
       <div className=" flex flex-col w-full">

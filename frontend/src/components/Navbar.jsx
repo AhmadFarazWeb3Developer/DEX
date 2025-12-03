@@ -25,7 +25,7 @@ const Navbar = () => {
           <SquaresExclude size={24} />
         </div>
         <div className="font-semibold sm:text-lg text-white hidden sm:block">
-          <SquaresExclude size={28} />
+          <SquaresExclude size={30} />
         </div>
 
         <div className="relative flex flex-row items-center font-semibold gap-4 text-xs sm:text-lg">
