@@ -38,7 +38,7 @@ const Navbar = () => {
               openPool ? "text-white" : "text-gray-400"
             }`}
           >
-            <label className="cursor-pointer  text-sm sm:text-lg">Pool</label>
+            <label className="cursor-pointer text-sm sm:text-lg">Pool</label>
             <ChevronDown
               size={14}
               strokeWidth={3}
@@ -110,7 +110,7 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`absolute top-6 left-32 mt-2 w-48
+            className={`absolute top-6 left-19 mt-2 w-48
               bg-[#0B1E13]
               border border-[#1f3528]
               rounded-md shadow-xl

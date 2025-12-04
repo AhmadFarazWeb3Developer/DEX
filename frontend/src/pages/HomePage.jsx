@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import {
   ArrowLeftRight,
@@ -7,8 +7,12 @@ import {
   Layers,
   ChevronDown,
 } from "lucide-react";
+import SelectToken from "../components/cards/SelectToken";
 
 const HomePage = () => {
+  const [isPayOpen, setIsPayOpen] = useState(false);
+  const [isReceiveOpen, setIsReceiveOpen] = useState(false);
+
   return (
     <div className="w-full">
       <Navbar />
@@ -23,12 +27,17 @@ const HomePage = () => {
                   placeholder="0.0"
                   className="bg-transparent text-white text-xl outline-none"
                 />
-                <div className=" flex flex-row items-center justify-center bg-[#00C084] rounded-full py-2 px-3 ">
-                  <button className=" text-[#E6E6E6]  text-sm font-semibold">
+                <div
+                  onClick={() => setIsPayOpen(!isPayOpen)}
+                  className=" cursor-pointer flex flex-row items-center justify-center bg-[#00C084] rounded-full py-2 px-3 "
+                >
+                  <button className=" cursor-pointer text-[#E6E6E6]  text-sm font-semibold">
                     Select Token
                   </button>
                   <ChevronDown className=" text-white" />
                 </div>
+
+                {isOpen && <SelectToken />}
               </div>
             </div>
 
@@ -44,16 +53,20 @@ const HomePage = () => {
                   className="bg-transparent text-white text-xl outline-none"
                 />
 
-                <div className=" flex flex-row items-center justify-center bg-[#00C084] rounded-full py-2 px-3">
-                  <button className="text-[#E6E6E6]  text-sm font-semibold">
+                <div
+                  onClick={() => isReceiveOpen(!isReceiveOpen)}
+                  className="cursor-pointer flex flex-row items-center justify-center bg-[#00C084] rounded-full py-2 px-3"
+                >
+                  <button className=" cursor-pointer text-[#E6E6E6]  text-sm font-semibold">
                     Select Token
                   </button>
                   <ChevronDown className=" text-white" />
                 </div>
               </div>
+              {isOpen && <SelectToken />}
             </div>
 
-            <button className="bg-[#00C084] text-[#E6E6E6] w-full py-2 rounded-sm font-semibold text-lg">
+            <button className=" cursor-pointer bg-[#00C084] text-[#E6E6E6] w-full py-2 rounded-sm font-semibold text-lg">
               Swap
             </button>
           </div>
