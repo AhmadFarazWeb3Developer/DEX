@@ -9,3 +9,19 @@
   --font-chypre: "Chypre", sans-serif;
   --letter-spacing-wide: 0.1em;
 }
+
+div::-webkit-scrollbar {
+  width: 8px;
+}
+div::-webkit-scrollbar-track {
+  background: #1f3324;
+  border-radius: 8px;
+}
+div::-webkit-scrollbar-thumb {
+  background: #4caf7c;
+  border-radius: 8px;
+  border: 2px solid #1f3324;
+}
+div::-webkit-scrollbar-thumb:hover {
+  background: #66d29f;
+}

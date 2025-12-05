@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import {
   ArrowLeftRight,
@@ -13,6 +13,26 @@ const HomePage = () => {
   const [isPayOpen, setIsPayOpen] = useState(false);
   const [isReceiveOpen, setIsReceiveOpen] = useState(false);
 
+  const payRef = useRef(null);
+  const receiveRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (payRef.current && !payRef.current.contains(event.target)) {
+        setIsPayOpen(false);
+      }
+
+      if (receiveRef.current && !receiveRef.current.contains(event.target)) {
+        setIsReceiveOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div className="w-full">
       <Navbar />
@@ -28,8 +48,9 @@ const HomePage = () => {
                   className="bg-transparent text-white text-xl outline-none"
                 />
                 <div
+                  ref={payRef}
                   onClick={() => setIsPayOpen(!isPayOpen)}
-                  className=" cursor-pointer flex flex-row items-center justify-center bg-[#00C084] rounded-full py-2 px-3 "
+                  className=" relative cursor-pointer flex flex-row items-center justify-center bg-[#00C084] rounded-full py-2 px-3 "
                 >
                   <button className=" cursor-pointer text-[#E6E6E6]  text-sm font-semibold">
                     Select Token
@@ -37,7 +58,11 @@ const HomePage = () => {
                   <ChevronDown className=" text-white" />
                 </div>
 
-                {isOpen && <SelectToken />}
+                {isPayOpen && (
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-12 z-50 w-1/3">
+                    <SelectToken />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -54,16 +79,21 @@ const HomePage = () => {
                 />
 
                 <div
-                  onClick={() => isReceiveOpen(!isReceiveOpen)}
+                  ref={receiveRef}
+                  onClick={() => setIsReceiveOpen(!isReceiveOpen)}
                   className="cursor-pointer flex flex-row items-center justify-center bg-[#00C084] rounded-full py-2 px-3"
                 >
-                  <button className=" cursor-pointer text-[#E6E6E6]  text-sm font-semibold">
+                  <button className="cursor-pointer text-[#E6E6E6]  text-sm font-semibold">
                     Select Token
                   </button>
                   <ChevronDown className=" text-white" />
                 </div>
               </div>
-              {isOpen && <SelectToken />}
+              {isReceiveOpen && (
+                <div className=" absolute top-0 left-1/2 transform -translate-x-1/2 mt-12 z-50 w-1/3">
+                  <SelectToken />
+                </div>
+              )}
             </div>
 
             <button className=" cursor-pointer bg-[#00C084] text-[#E6E6E6] w-full py-2 rounded-sm font-semibold text-lg">
