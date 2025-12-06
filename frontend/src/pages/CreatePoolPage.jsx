@@ -16,7 +16,6 @@ const CreatePoolPage = () => {
         <p className="text-gray-300 text-sm mb-1">Token A</p>
         <div className="flex justify-between items-center bg-[#0B1E13] rounded-lg p-3">
           <input
-            type="number"
             placeholder="0.0"
             value={amountA}
             onChange={(e) => setAmountA(e.target.value)}
@@ -44,7 +43,6 @@ const CreatePoolPage = () => {
         <p className="text-gray-300 text-sm mb-1">Token B</p>
         <div className="flex justify-between items-center bg-[#0B1E13] rounded-lg p-3">
           <input
-            type="number"
             placeholder="0.0"
             value={amountB}
             onChange={(e) => setAmountB(e.target.value)}

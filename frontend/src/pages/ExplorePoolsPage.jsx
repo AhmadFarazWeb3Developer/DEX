@@ -55,12 +55,10 @@ const ExplorePoolsPage = () => {
               ))}
             </div>
 
-            {/* Pair Name */}
             <p className="text-white font-semibold text-lg mb-2">
               {pool.pair.join(" / ")}
             </p>
 
-            {/* Pool Info */}
             <div className="flex justify-between text-gray-300 text-sm">
               <div>
                 <p className="font-medium">TVL</p>
