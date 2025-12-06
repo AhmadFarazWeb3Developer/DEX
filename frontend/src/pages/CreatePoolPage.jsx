@@ -9,7 +9,7 @@ const CreatePoolPage = () => {
   const [amountB, setAmountB] = useState("");
 
   return (
-    <div className="w-full max-w-md mx-auto bg-[#12291a] rounded-lg p-6 shadow-xl h-screen">
+    <div className="w-1/2  bg-[#12291a] rounded-lg p-6  shadow-xl h-screen">
       <h2 className="text-white text-2xl font-bold mb-6">Create a Pool</h2>
 
       <div className="relative mb-4">
@@ -69,7 +69,6 @@ const CreatePoolPage = () => {
       <div className="mb-6">
         <p className="text-gray-300 text-sm mb-1">Fee (%)</p>
         <input
-          type="number"
           placeholder="0.3"
           className="w-full bg-[#0B1E13] rounded-lg p-3 text-white text-lg outline-none"
         />
