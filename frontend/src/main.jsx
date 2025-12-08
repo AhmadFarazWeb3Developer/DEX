@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import ExplorePoolPage from "./pages/ExplorePoolsPage.jsx";
 import CreatePoolPage from "./pages/CreatePoolPage.jsx";
+import ReownProvider from "./context/ReownProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ReownProvider>
+      <RouterProvider router={router} />
+    </ReownProvider>
   </StrictMode>
 );
