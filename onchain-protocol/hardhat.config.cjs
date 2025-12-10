@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("dotenv").config();
+
+require("dotenv").config({ path: "../frontend" });
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -26,38 +27,43 @@ module.exports = {
       },
     },
 
-    polygon_amoy: {
-      url: "https://rpc-amoy.polygon.technology",
-      accounts: [process.env.PRIVATE_KEY],
-      chainId: 80002,
-    },
+    // polygon_amoy: {
+    //   url: "https://rpc-amoy.polygon.technology",
+    //   accounts: [process.env.PRIVATE_KEY],
+    //   chainId: 80002,
+    // },
 
-    bsc_testnet: {
-      url: `https://bnb-testnet.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
-      accounts: [process.env.PRIVATE_KEY],
-      chainId: 97,
-    },
+    // bsc_testnet: {
+    //   url: `https://bnb-testnet.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+    //   accounts: [process.env.PRIVATE_KEY],
+    //   chainId: 97,
+    // },
 
-    arbitrum_sepolia: {
-      url: `https://arb-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
-      accounts: [process.env.PRIVATE_KEY],
-      chainId: 421614,
-    },
+    // arbitrum_sepolia: {
+    //   url: `https://arb-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+    //   accounts: [process.env.PRIVATE_KEY],
+    //   chainId: 421614,
+    // },
 
-    avalanche_fuji: {
-      url: `https://avax-fuji.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
-      accounts: [process.env.PRIVATE_KEY],
-      chainId: 43113,
-    },
-    optimism_sepolia: {
-      url: `https://opt-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
-      accounts: [process.env.PRIVATE_KEY],
-      chainId: 11155420,
-    },
+    // avalanche_fuji: {
+    //   url: `https://avax-fuji.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+    //   accounts: [process.env.PRIVATE_KEY],
+    //   chainId: 43113,
+    // },
+    // optimism_sepolia: {
+    //   url: `https://opt-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+    //   accounts: [process.env.PRIVATE_KEY],
+    //   chainId: 11155420,
+    // },
   },
 
   solidity: {
-    compilers: [{ version: "0.8.13" }, { version: "0.8.20" }],
+    compilers: [
+      { version: "0.5.16" },
+      { version: "0.6.6" },
+      { version: "0.8.13" },
+      { version: "0.8.20" },
+    ],
     settings: {
       optimizer: {
         enabled: true,
@@ -66,11 +72,11 @@ module.exports = {
     },
   },
 
-  paths: {
-    sources: "./onchain",
-    artifacts: "./artifacts",
-    cache: "./cache",
-  },
+  // paths: {
+  //   sources: "./contract",
+  //   artifacts: "./artifacts",
+  //   cache: "./cache",
+  // },
 
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,

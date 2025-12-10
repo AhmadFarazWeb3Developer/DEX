@@ -9,6 +9,10 @@ import {
   useAppKitNetwork,
   useAppKitState,
 } from "@reown/appkit/react";
+import getChainName from "../blockchain-interaction/helper/getChainName";
+import { getNetworkToken } from "../blockchain-interaction/helper/getNetworkToken";
+import readInstances from "../blockchain-interaction/helper/readInstances";
+import useReadInstances from "../blockchain-interaction/helper/readInstances";
 
 const ConnectButton = () => {
   const { open, close } = useAppKit();
@@ -25,7 +29,8 @@ const ConnectButton = () => {
   const [previousChainId, setPreviousChainId] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  // Close modal when network changes
+  const { readInstances } = useReadInstances();
+
   useEffect(() => {
     if (
       previousChainId !== null &&
@@ -37,12 +42,12 @@ const ConnectButton = () => {
     setPreviousChainId(chainId);
   }, [chainId, isModalOpen, close, previousChainId]);
 
-  //   useEffect(() => {
-  //     if (chainId) {
-  //       const token = getNetworkToken(chainId);
-  //       setNativeToken(token);
-  //     }
-  //   }, [chainId]);
+  useEffect(() => {
+    if (chainId) {
+      const token = getNetworkToken(chainId);
+      setNativeToken(token);
+    }
+  }, [chainId]);
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -63,33 +68,14 @@ const ConnectButton = () => {
   }, [isConnected, address, chainId, walletProvider]);
 
   useEffect(() => {
+    readInstances();
     setImageLoaded(false);
   }, [chainId, caipNetwork]);
 
   const getNetworkImageUrl = () => {
     if (!chainId) return null;
+    const chainName = getChainName(chainId);
 
-    const chainMap = {
-      1: "ethereum",
-      137: "polygon",
-      56: "smartchain",
-      42161: "arbitrum",
-      10: "optimism",
-      43114: "avalanchec",
-      8453: "base",
-      250: "fantom",
-      100: "xdai",
-      11155111: "ethereum",
-      80002: "polygon",
-      97: "smartchain",
-      421614: "arbitrum",
-      43113: "avalanchec",
-      11155420: "optimism",
-      84532: "base",
-      31337: "ethereum",
-    };
-
-    const chainName = chainMap[chainId];
     if (chainName) {
       return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/${chainName}/info/logo.png`;
     }
