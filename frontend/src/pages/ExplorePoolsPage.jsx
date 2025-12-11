@@ -7,6 +7,7 @@ import Tokens from "../components/Tokens";
 const ExplorePoolsPage = () => {
   const [isPoolSet, setPool] = useState(true);
   const [isTokensSet, setTokens] = useState(false);
+
   return (
     <div className="w-full  min-h-screen px-4 py-4 ">
       <div className="flex flex-row justify-between items-center mb-6">

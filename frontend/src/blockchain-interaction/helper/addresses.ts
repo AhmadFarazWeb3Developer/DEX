@@ -2,6 +2,7 @@ import ContractsAddresses from "../../../../onchain-protocol/deployment/Contract
 
 const addresses = {
   UniswapV2FactoryAddress: ContractsAddresses.UniswapV2FactoryAddress,
+  UniswapV2ERC20Address: ContractsAddresses.UniswapV2ERC20Address,
   UniswapV2Router02MockAddress: ContractsAddresses.UniswapV2Router02MockAddress,
 
   DaiAddress: ContractsAddresses.DaiAddress,

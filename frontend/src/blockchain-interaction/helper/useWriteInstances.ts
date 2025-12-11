@@ -1,12 +1,12 @@
 import { Contract } from "ethers";
 
 import { useAppKitNetwork } from "@reown/appkit/react";
-import getProvider from "./getProvider";
 
 import abis from "./abis";
 import addresses from "./addresses";
+import getSigner from "./getSiger";
 
-const useReadInstances = () => {
+const useWriteInstances = () => {
   const { chainId } = useAppKitNetwork();
 
   const {
@@ -38,54 +38,54 @@ const useReadInstances = () => {
     UsdcAddress,
   } = addresses;
 
-  const readInstances = async () => {
+  const writeInstances = async () => {
     if (!chainId) return;
 
     const numericChainId =
       typeof chainId === "string" ? parseInt(chainId) : chainId;
-    const provider = await getProvider(numericChainId);
+    const { signer } = await getSigner(numericChainId);
 
     // FACTORY & ROUTER
     const uniswapV2FactoryInstance = new Contract(
       UniswapV2FactoryAddress,
       UniswapV2FactoryAbi,
-      provider
+      signer
     );
     const UniswapV2ERC20Instance = new Contract(
       UniswapV2ERC20Address,
       UniswapV2ERC20Abi,
-      provider
+      signer
     );
 
     const uniswapV2Router02MockInstance = new Contract(
       UniswapV2Router02MockAddress,
       UniswapV2Router02MockAbi,
-      provider
+      signer
     );
 
     // TOKENS
-    const daiMockInstance = new Contract(DaiAddress, DaiMockAbi, provider);
-    const usdtMockInstance = new Contract(UsdtAddress, UsdtMockAbi, provider);
-    const wethMockInstance = new Contract(WethAddress, WethMockAbi, provider);
-    const bnbMockInstance = new Contract(BnbAddress, BnbMockAbi, provider);
-    const usdcMockInstance = new Contract(UsdcAddress, UsdcMockAbi, provider);
+    const daiMockInstance = new Contract(DaiAddress, DaiMockAbi, signer);
+    const usdtMockInstance = new Contract(UsdtAddress, UsdtMockAbi, signer);
+    const wethMockInstance = new Contract(WethAddress, WethMockAbi, signer);
+    const bnbMockInstance = new Contract(BnbAddress, BnbMockAbi, signer);
+    const usdcMockInstance = new Contract(UsdcAddress, UsdcMockAbi, signer);
 
     const avalancheMockInstance = new Contract(
       AvalancheAddress,
       AvalancheMockAbi,
-      provider
+      signer
     );
 
     const chainlinkMockInstance = new Contract(
       ChainlinkAddress,
       ChainlinkMockAbi,
-      provider
+      signer
     );
 
     const polkadotMockInstance = new Contract(
       PolkadotAddress,
       PolkadotMockAbi,
-      provider
+      signer
     );
 
     return {
@@ -104,7 +104,7 @@ const useReadInstances = () => {
     };
   };
 
-  return { readInstances };
+  return { writeInstances };
 };
 
-export default useReadInstances;
+export default useWriteInstances;

@@ -11,8 +11,7 @@ import {
 } from "@reown/appkit/react";
 import getChainName from "../blockchain-interaction/helper/getChainName";
 import { getNetworkToken } from "../blockchain-interaction/helper/getNetworkToken";
-import readInstances from "../blockchain-interaction/helper/readInstances";
-import useReadInstances from "../blockchain-interaction/helper/readInstances";
+import useReadInstances from "../blockchain-interaction/helper/useReadInstances";
 
 const ConnectButton = () => {
   const { open, close } = useAppKit();

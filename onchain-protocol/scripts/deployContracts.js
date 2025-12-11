@@ -8,6 +8,8 @@ const deployContract = async () => {
     const UniswapV2Factory = await ethers.getContractFactory(
       "UniswapV2Factory"
     );
+    // const UniswapV2Pair = await ethers.getContractFactory("UniswapV2Pair");
+    const UniswapV2ERC20 = await ethers.getContractFactory("UniswapV2ERC20");
 
     const UniswapV2Router02Mock = await ethers.getContractFactory(
       "UniswapV2Router02Mock"
@@ -25,57 +27,60 @@ const deployContract = async () => {
 
     const INITIAL_SUPPLY = ethers.parseUnits("1000000", 18); // 1M
 
-    const Dai = await DaiMock.deploy(INITIAL_SUPPLY);
-    await Dai.waitForDeployment();
+    const dai = await DaiMock.deploy(INITIAL_SUPPLY);
+    await dai.waitForDeployment();
 
-    const Usdt = await UsdtMock.deploy(INITIAL_SUPPLY);
-    await Usdt.waitForDeployment();
+    const usdt = await UsdtMock.deploy(INITIAL_SUPPLY);
+    await usdt.waitForDeployment();
 
-    const Weth = await WethMock.deploy(INITIAL_SUPPLY);
-    await Weth.waitForDeployment();
+    const weth = await WethMock.deploy(INITIAL_SUPPLY);
+    await weth.waitForDeployment();
 
-    const Avalanche = await AvalancheMock.deploy(INITIAL_SUPPLY);
-    await Avalanche.waitForDeployment();
+    const avalanche = await AvalancheMock.deploy(INITIAL_SUPPLY);
+    await avalanche.waitForDeployment();
 
-    const Bnb = await BnbMock.deploy(INITIAL_SUPPLY);
-    await Bnb.waitForDeployment();
+    const bnb = await BnbMock.deploy(INITIAL_SUPPLY);
+    await bnb.waitForDeployment();
 
-    const Chainlink = await ChainlinkMock.deploy(INITIAL_SUPPLY);
-    await Chainlink.waitForDeployment();
+    const chainlink = await ChainlinkMock.deploy(INITIAL_SUPPLY);
+    await chainlink.waitForDeployment();
 
-    const Polkadot = await PolkadotMock.deploy(INITIAL_SUPPLY);
-    await Polkadot.waitForDeployment();
+    const polkadot = await PolkadotMock.deploy(INITIAL_SUPPLY);
+    await polkadot.waitForDeployment();
 
-    const Usdc = await UsdcMock.deploy(INITIAL_SUPPLY);
-    await Usdc.waitForDeployment();
+    const usdc = await UsdcMock.deploy(INITIAL_SUPPLY);
+    await usdc.waitForDeployment();
 
-    const Polygon = await UsdcMock.deploy(INITIAL_SUPPLY);
-    await Polygon.waitForDeployment();
+    const polygon = await PolygonMock.deploy(INITIAL_SUPPLY);
+    await polygon.waitForDeployment();
 
     const factory = await UniswapV2Factory.deploy(
       "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
     );
-
     await factory.waitForDeployment();
 
     const router = await UniswapV2Router02Mock.deploy(
       factory.target,
-      Weth.target
+      weth.target
     );
     await router.waitForDeployment();
+
+    const uniswapV2ERC20 = await UniswapV2ERC20.deploy();
+    await uniswapV2ERC20.waitForDeployment();
 
     const deployed = {
       UniswapV2FactoryAddress: factory.target,
       UniswapV2Router02MockAddress: router.target,
-      DaiAddress: Dai.target,
-      UsdtAddress: Usdt.target,
-      WethAddress: Weth.target,
-      AvalancheAddress: Avalanche.target,
-      UsdcAddress: Usdc.target,
-      ChainlinkAddress: Chainlink.target,
-      PolkadotAddress: Polkadot.target,
-      BnbAddress: Bnb.target,
-      PolygonAddress: Polygon.target,
+      UniswapV2ERC20Address: uniswapV2ERC20.target,
+      DaiAddress: dai.target,
+      UsdtAddress: usdt.target,
+      WethAddress: weth.target,
+      AvalancheAddress: avalanche.target,
+      UsdcAddress: usdc.target,
+      ChainlinkAddress: chainlink.target,
+      PolkadotAddress: polkadot.target,
+      BnbAddress: bnb.target,
+      PolygonAddress: polygon.target,
     };
 
     const deploymentFolder = "./deployment";

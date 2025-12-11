@@ -8,31 +8,43 @@ import {
   ChevronDown,
 } from "lucide-react";
 import SelectToken from "../components/cards/SelectToken";
+import { TokenType } from "../types/TokenType";
 
 const HomePage = () => {
   const [isPayOpen, setIsPayOpen] = useState(false);
   const [isReceiveOpen, setIsReceiveOpen] = useState(false);
 
-  const payRef = useRef(null);
-  const receiveRef = useRef(null);
+  const payRef = useRef<HTMLDivElement>(null);
+  const receiveRef = useRef<HTMLDivElement>(null);
+
+  const [token, setToken] = useState<TokenType[]>([]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (payRef.current && !payRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target;
+
+      if (
+        payRef.current &&
+        target instanceof Node &&
+        !payRef.current.contains(target)
+      ) {
         setIsPayOpen(false);
       }
 
-      if (receiveRef.current && !receiveRef.current.contains(event.target)) {
+      if (
+        receiveRef.current &&
+        target instanceof Node &&
+        !receiveRef.current.contains(target)
+      ) {
         setIsReceiveOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <div className="w-full">
       <Navbar />
@@ -60,7 +72,7 @@ const HomePage = () => {
 
                 {isPayOpen && (
                   <div className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-12 z-50 w-1/3">
-                    <SelectToken />
+                    <SelectToken setToken={setToken} />
                   </div>
                 )}
               </div>
@@ -91,7 +103,7 @@ const HomePage = () => {
               </div>
               {isReceiveOpen && (
                 <div className=" absolute top-0 left-1/2 transform -translate-x-1/2 mt-12 z-50 w-1/3">
-                  <SelectToken />
+                  <SelectToken setToken={setToken} />
                 </div>
               )}
             </div>
