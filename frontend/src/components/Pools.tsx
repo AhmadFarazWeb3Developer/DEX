@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import useAllPools from "../blockchain-interaction/useAllPools";
 const Pools = () => {
   const pools = [
     {
@@ -31,6 +33,15 @@ const Pools = () => {
       apy: "15%",
     },
   ];
+
+  const { allPools } = useAllPools();
+
+  useEffect(() => {
+    const initPools = async () => {
+      const { pairsAddresses } = await allPools();
+    };
+    initPools();
+  }, []);
 
   return (
     <div className="flex flex-col w-full">

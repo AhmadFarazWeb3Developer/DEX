@@ -4,10 +4,11 @@ import { useAppKitNetwork } from "@reown/appkit/react";
 
 import abis from "./abis";
 import addresses from "./addresses";
-import getSigner from "./getSiger";
+import useSigner from "./useSiger";
 
 const useWriteInstances = () => {
   const { chainId } = useAppKitNetwork();
+  const { getSigner } = useSigner();
 
   const {
     UniswapV2FactoryAbi,
@@ -43,6 +44,7 @@ const useWriteInstances = () => {
 
     const numericChainId =
       typeof chainId === "string" ? parseInt(chainId) : chainId;
+
     const { signer } = await getSigner(numericChainId);
 
     // FACTORY & ROUTER

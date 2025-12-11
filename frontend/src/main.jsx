@@ -4,8 +4,8 @@ import App from "./app/App.jsx";
 import "./styles/global.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
-import ExplorePoolPage from "./pages/ExplorePoolsPage.jsx";
-import CreatePoolPage from "./pages/CreatePoolPage.jsx";
+import ExplorePoolPage from "./pages/ExplorePoolsPage.tsx";
+import CreatePoolPage from "./pages/CreatePoolPage.tsx";
 import ReownProvider from "./context/ReownProvider.jsx";
 
 const router = createBrowserRouter([

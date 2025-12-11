@@ -1,9 +1,9 @@
 import { Search } from "lucide-react";
-
-import Pools from "../components/Pools";
 import { useState } from "react";
 
+import Pools from "../components/Pools";
 import Tokens from "../components/Tokens";
+
 const ExplorePoolsPage = () => {
   const [isPoolSet, setPool] = useState(true);
   const [isTokensSet, setTokens] = useState(false);

@@ -9,3 +9,5 @@
 ### create pair
 
 ### allow others to add liquidity
+
+### RPC providers are required to read data and create provider, but for write we use our wallet not the rpc url
