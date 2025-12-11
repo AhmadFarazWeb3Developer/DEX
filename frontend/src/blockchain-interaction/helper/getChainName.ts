@@ -1,4 +1,4 @@
-const getChainName = (chainId) => {
+const getChainName = (chainId: number) => {
   switch (chainId) {
     case 1:
       return "ethereum";

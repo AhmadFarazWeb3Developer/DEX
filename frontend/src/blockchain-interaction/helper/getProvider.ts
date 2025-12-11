@@ -1,9 +1,10 @@
 import { JsonRpcProvider } from "ethers";
 
-const getProvider = async (chainId) => {
+const getProvider = async (chainId: number) => {
   const getLocalRpcUrl = () => {
     return "http://127.0.0.1:8545";
   };
+
   const localRpcUrl = getLocalRpcUrl();
 
   const apiKey = import.meta.env.VITE_ALCHEMY_RPC_API_KEY;

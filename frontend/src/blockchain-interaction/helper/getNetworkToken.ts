@@ -1,5 +1,13 @@
-export const getNetworkToken = (chainId) => {
-  const tokens = {
+export const getNetworkToken = (chainId: number) => {
+  type ChainInfo = {
+    symbol: string;
+    name: string;
+    decimals: number;
+  };
+
+  type ChainMap = Record<number, ChainInfo>;
+
+  const tokens: ChainMap = {
     1: { symbol: "ETH", name: "Ether", decimals: 18 },
     11155111: { symbol: "ETH", name: "Sepolia Ether", decimals: 18 },
     5: { symbol: "ETH", name: "Goerli Ether", decimals: 18 },

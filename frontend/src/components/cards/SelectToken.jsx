@@ -13,6 +13,13 @@ const SelectToken = () => {
         tokenAddress: "0x0000000000000000000000000000000000000000",
       },
       {
+        chain: "Dai",
+        tokenName: "DAI",
+        icon: "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+      },
+
+      {
         chain: "Polygon",
         tokenName: "MATIC",
         icon: "https://cryptologos.cc/logos/polygon-matic-logo.png",
@@ -42,22 +49,11 @@ const SelectToken = () => {
         icon: "https://cryptologos.cc/logos/avalanche-avax-logo.png",
         tokenAddress: "0x0000000000000000000000000000000000000000", // AVAX native
       },
-      {
-        chain: "Solana",
-        tokenName: "SOL",
-        icon: "https://cryptologos.cc/logos/solana-sol-logo.png",
-        tokenAddress: "So11111111111111111111111111111111111111112",
-      },
+
       {
         chain: "Polkadot",
         tokenName: "DOT",
         icon: "https://cryptologos.cc/logos/polkadot-new-dot-logo.png",
-        tokenAddress: "0x0000000000000000000000000000000000000000",
-      },
-      {
-        chain: "Cardano",
-        tokenName: "ADA",
-        icon: "https://cryptologos.cc/logos/cardano-ada-logo.png",
         tokenAddress: "0x0000000000000000000000000000000000000000",
       },
       {
