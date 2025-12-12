@@ -7,4 +7,5 @@ export const TOKEN_ICONS: Record<string, string> = {
   link: "https://cryptologos.cc/logos/chainlink-link-logo.png",
   dot: "https://cryptologos.cc/logos/polkadot-new-dot-logo.png",
   usdc: "https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
+  matic: "https://cryptologos.cc/logos/polygon-matic-logo.png",
 };

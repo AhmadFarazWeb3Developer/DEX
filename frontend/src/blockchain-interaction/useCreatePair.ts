@@ -7,14 +7,25 @@ const useCreatePair = () => {
   const { writeInstances } = useWriteInstances();
   const [isCreatingPair, setIsCreatingPair] = useState(false);
 
-  const createPair = async (tokenA: string, tokenB: string) => {
+  const createPair = async (
+    tokenAAddress: string,
+    tokenBAddress: string,
+    tokenAName: string,
+    tokenBName: string
+  ) => {
     const instances = await writeInstances();
     if (!instances) return;
+
+    console.log(tokenAName);
+    console.log(tokenBName);
 
     const { uniswapV2FactoryInstance } = instances;
     try {
       setIsCreatingPair(true);
-      const tx = await uniswapV2FactoryInstance.createPair(tokenA, tokenB);
+      const tx = await uniswapV2FactoryInstance.createPair(
+        tokenAAddress,
+        tokenBAddress
+      );
       console.log("Transaction sent:", tx.hash);
 
       const receipt = await tx.wait();
@@ -50,7 +61,8 @@ const useCreatePair = () => {
           },
           body: JSON.stringify({
             pairAddress,
-            pair: [tokenA, tokenB],
+            pair: [tokenAAddress, tokenBAddress],
+            tokensName: [tokenAName, tokenBName],
           }),
         }
       );

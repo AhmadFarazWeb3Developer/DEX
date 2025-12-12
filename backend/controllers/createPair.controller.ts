@@ -3,7 +3,7 @@ import type { Request, Response } from "express";
 
 const createPair = async (req: Request, res: Response) => {
   try {
-    const { pairAddress, pair } = req.body;
+    const { pairAddress, pair, tokensName } = req.body;
 
     if (!pairAddress || !pair) {
       return res.status(400).json({
@@ -13,6 +13,7 @@ const createPair = async (req: Request, res: Response) => {
     const newPair = new Pairs({
       pairAddress,
       pair,
+      tokensName,
     });
 
     const savedPair = await newPair.save();

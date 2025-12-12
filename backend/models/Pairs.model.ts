@@ -14,6 +14,14 @@ const pairsSchema = new mongoose.Schema({
       message: "pair must contain exactly 2 addresses",
     },
   },
+  tokensName: {
+    type: [String],
+    required: true,
+    validate: {
+      validator: (v: string[]) => v.length === 2,
+      message: "tokens names must be 2 only",
+    },
+  },
 });
 
 const Pairs = mongoose.model("pairs", pairsSchema);
