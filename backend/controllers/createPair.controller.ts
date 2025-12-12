@@ -19,9 +19,9 @@ const createPair = async (req: Request, res: Response) => {
 
     return res.status(201).json(savedPair);
   } catch (error: any) {
-    console.error("Error in createCollection:", error);
+    console.error("Error in createPair controller:", error);
     res.status(500).json({
-      error: error.message || "Something went wrong",
+      error: "Error in createPair controller",
       details: error,
     });
   }

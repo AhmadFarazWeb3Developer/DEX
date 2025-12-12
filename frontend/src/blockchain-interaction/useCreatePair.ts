@@ -1,9 +1,11 @@
 import { toast } from "sonner";
 import { decodeError } from "./helper/decodeError";
 import useWriteInstances from "./helper/useWriteInstances";
+import { useState } from "react";
 
 const useCreatePair = () => {
   const { writeInstances } = useWriteInstances();
+  const [isCreatingPair, setIsCreatingPair] = useState(false);
 
   const createPair = async (tokenA: string, tokenB: string) => {
     const instances = await writeInstances();
@@ -11,6 +13,7 @@ const useCreatePair = () => {
 
     const { uniswapV2FactoryInstance } = instances;
     try {
+      setIsCreatingPair(true);
       const tx = await uniswapV2FactoryInstance.createPair(tokenA, tokenB);
       console.log("Transaction sent:", tx.hash);
 
@@ -26,7 +29,9 @@ const useCreatePair = () => {
             pairAddress = parsed.args.pair; // event arg named “pair”
             break;
           }
-        } catch (err) {}
+        } catch (err) {
+          setIsCreatingPair(false);
+        }
       }
 
       console.log("Pair created at:", pairAddress);
@@ -37,7 +42,7 @@ const useCreatePair = () => {
       }
 
       const response = await fetch(
-        "http://localhost:8000/api/pair/createPair",
+        "http://localhost:8000/api/pair/create-pair",
         {
           method: "POST",
           headers: {
@@ -50,23 +55,27 @@ const useCreatePair = () => {
         }
       );
 
-      console.log("Backend response:", await response.json());
-      const data = await response.json();
+      await response.json();
 
-      if (data.status === 201) {
+      if (response.status === 201) {
         toast.success("Pair Created", {
           action: {
             label: "Close",
             onClick: () => {},
           },
         });
+        return true;
       }
     } catch (err) {
       decodeError(err);
+      setIsCreatingPair(false);
+      return false;
+    } finally {
+      setIsCreatingPair(false);
     }
   };
 
-  return { createPair };
+  return { createPair, isCreatingPair };
 };
 
 export default useCreatePair;

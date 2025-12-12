@@ -1,25 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useCreatePair from "../blockchain-interaction/useCreatePair";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import useVerifyTokens from "../blockchain-interaction/helper/useVerifyTokens";
 
 const CreatePoolPage = () => {
   const [tokenAAddress, setTokenAAddress] = useState("");
   const [tokenBAddress, setTokenBAddress] = useState("");
 
-  const { createPair } = useCreatePair();
+  const { createPair, isCreatingPair } = useCreatePair();
+  const { verifyTokens } = useVerifyTokens();
 
   const isValidAddress = (address: string) =>
     /^0x[a-fA-F0-9]{40}$/.test(address);
 
   const handleCreatePool = async () => {
     if (!isValidAddress(tokenAAddress) || !isValidAddress(tokenBAddress)) {
-      alert("Please enter valid token addresses");
+      toast.error("Must fill both addresses", {
+        action: { label: "Close", onClick: () => {} },
+      });
       return;
     }
-    console.log("Creating pool with:", tokenAAddress, tokenBAddress);
 
-    await createPair(tokenAAddress, tokenBAddress);
+    const bool = await createPair(tokenAAddress, tokenBAddress);
+    if (bool === true) setTokenAAddress("");
+    if (bool === true) setTokenBAddress("");
   };
 
+  useEffect(() => {
+    const verify = async () => {
+      const addresses = [
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      ];
+
+      await verifyTokens(addresses);
+    };
+
+    verify();
+  }, []);
   return (
     <div className=" h-screen w-full flex flex-row items-center justify-center">
       <div className="w-1/2 bg-[#12291a]  rounded-lg p-6 shadow-xl ">
@@ -45,12 +64,23 @@ const CreatePoolPage = () => {
           />
         </div>
 
-        <button
-          onClick={handleCreatePool}
-          className="w-full bg-[#00C084] text-[#E6E6E6] py-3 rounded-lg font-semibold text-lg hover:bg-[#00d494] transition-colors"
-        >
-          Create Pool
-        </button>
+        {!isCreatingPair ? (
+          <button
+            onClick={handleCreatePool}
+            disabled={isCreatingPair}
+            className="w-full bg-[#00C084] text-[#E6E6E6] py-3 rounded-lg font-semibold text-lg hover:bg-[#00d494] transition-colors"
+          >
+            Create Pool
+          </button>
+        ) : (
+          <button
+            disabled
+            className="w-full bg-[#00C084] text-[#E6E6E6] py-3 rounded-lg font-semibold text-lg flex justify-center items-center gap-2 cursor-not-allowed"
+          >
+            <Loader2 className="animate-spin h-5 w-5" />
+            Creating...
+          </button>
+        )}
       </div>
     </div>
   );
