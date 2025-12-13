@@ -129,7 +129,10 @@ const Navbar = () => {
               ${openLiq ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}
           >
             <div
-              onClick={() => handleLiqSelect("add")}
+              onClick={() => {
+                handleLiqSelect("add");
+                navigate("add-liquidity");
+              }}
               className="px-4 py-2 hover:bg-[#12291a] sm:text-lg transition-colors duration-200 cursor-pointer"
             >
               Add Liquidity

@@ -3,10 +3,11 @@ import { createRoot } from "react-dom/client";
 import App from "./app/App.jsx";
 import "./styles/global.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ReownProvider from "./context/ReownProvider.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ExplorePoolPage from "./pages/ExplorePoolsPage.tsx";
 import CreatePoolPage from "./pages/CreatePoolPage.tsx";
-import ReownProvider from "./context/ReownProvider.jsx";
+import AddLiquidity from "./pages/AddLiquidity.tsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/explore-pools", element: <ExplorePoolPage /> },
       { path: "/create-pool", element: <CreatePoolPage /> },
+      { path: "/add-liquidity", element: <AddLiquidity /> },
     ],
   },
 ]);
