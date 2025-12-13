@@ -31,13 +31,12 @@ const Tokens = () => {
         <p className="flex-[2]">Address</p>
       </div>
 
-      {/* Table Rows */}
       {tokens.map((token, index) => (
         <div
           key={token.address}
           className="flex items-center px-4 py-3 bg-[#12291a] border border-[#1f3528] rounded-lg hover:bg-[#0B1E13] transition-colors shadow-sm"
         >
-          <p className="text-white flex-[0.5]">{index + 1}</p>
+          <p className=" text-gray-400 font-semibold flex-[0.5]">{index + 1}</p>
 
           <div className="flex items-center space-x-2 flex-[2]">
             <img

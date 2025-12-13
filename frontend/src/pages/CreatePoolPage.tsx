@@ -157,7 +157,7 @@ const CreatePoolPage = () => {
               <button
                 onClick={handleCreatePool}
                 disabled={isCreatingPair}
-                className="w-full bg-gradient-to-r from-[#00C084] to-[#00d494] text-white py-4 rounded-xl font-semibold text-lg hover:from-[#00d494] hover:to-[#00e8a8] transition-all shadow-lg shadow-[#00C084]/20 hover:shadow-[#00C084]/40 hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full bg-gradient-to-r from-[#00C084] to-[#00d494] text-white py-4 rounded-xl font-semibold text-lg hover:from-[#00d494] hover:to-[#00e8a8] transition-all shadow-lg shadow-[#00C084]/20 hover:shadow-[#00C084]/40 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
                 Create Pool
               </button>

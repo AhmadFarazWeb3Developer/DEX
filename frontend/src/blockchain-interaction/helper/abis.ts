@@ -1,4 +1,5 @@
 import UniswapV2Factory from "../../../../onchain-protocol/artifacts/contracts/UniswapV2Factory.sol/UniswapV2Factory.json";
+import UniswapV2Pair from "../../../../onchain-protocol/artifacts/contracts/UniswapV2Pair.sol/UniswapV2Pair.json";
 import UniswapV2ERC20 from "../../../../onchain-protocol/artifacts/contracts/UniswapV2ERC20.sol/UniswapV2ERC20.json";
 import UniswapV2Router02Mock from "../../../../onchain-protocol/artifacts/contracts/mocks/router/UniswapV2Router02Mock.sol/UniswapV2Router02Mock.json";
 import DaiMock from "../../../../onchain-protocol/artifacts/contracts/mocks/tokens/DaiMock.sol/DaiMock.json";
@@ -13,7 +14,9 @@ import PolygonMock from "../../../../onchain-protocol/artifacts/contracts/mocks/
 
 const abis = {
   UniswapV2FactoryAbi: UniswapV2Factory.abi,
+  UniswapV2PairAbi: UniswapV2Pair.abi,
   UniswapV2ERC20Abi: UniswapV2ERC20.abi,
+
   UniswapV2Router02MockAbi: UniswapV2Router02Mock.abi,
 
   DaiMockAbi: DaiMock.abi,

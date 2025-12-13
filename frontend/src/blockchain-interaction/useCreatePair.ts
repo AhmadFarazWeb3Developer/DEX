@@ -16,9 +16,6 @@ const useCreatePair = () => {
     const instances = await writeInstances();
     if (!instances) return;
 
-    console.log(tokenAName);
-    console.log(tokenBName);
-
     const { uniswapV2FactoryInstance } = instances;
     try {
       setIsCreatingPair(true);
@@ -37,7 +34,7 @@ const useCreatePair = () => {
         try {
           const parsed = uniswapV2FactoryInstance.interface.parseLog(log);
           if (parsed?.name === "PairCreated") {
-            pairAddress = parsed.args.pair; // event arg named “pair”
+            pairAddress = parsed.args.pair;
             break;
           }
         } catch (err) {
