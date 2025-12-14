@@ -14,7 +14,7 @@ const pairsSchema = new mongoose.Schema({
       message: "pair must contain exactly 2 addresses",
     },
   },
-  tokensName: {
+  tokensSymbol: {
     type: [String],
     required: true,
     validate: {

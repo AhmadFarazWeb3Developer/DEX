@@ -1,6 +1,7 @@
 export type PoolType = {
   pair: string[];
   pairAddress: string;
-  tokensName: string[];
+  tokensSymbol: string[];
   poolReserves: string[];
+  tvl: number;
 };

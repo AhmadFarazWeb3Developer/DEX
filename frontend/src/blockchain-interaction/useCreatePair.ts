@@ -10,8 +10,8 @@ const useCreatePair = () => {
   const createPair = async (
     tokenAAddress: string,
     tokenBAddress: string,
-    tokenAName: string,
-    tokenBName: string
+    tokenASymbol: string,
+    tokenBSymbol: string
   ) => {
     const instances = await writeInstances();
     if (!instances) return;
@@ -59,7 +59,7 @@ const useCreatePair = () => {
           body: JSON.stringify({
             pairAddress,
             pair: [tokenAAddress, tokenBAddress],
-            tokensName: [tokenAName, tokenBName],
+            tokensSymbol: [tokenASymbol, tokenBSymbol],
           }),
         }
       );

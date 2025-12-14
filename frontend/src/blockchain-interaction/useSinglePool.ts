@@ -1,7 +1,7 @@
 import { useAppKitNetwork } from "@reown/appkit/react";
 import getProvider from "./helper/getProvider";
 import abis from "./helper/abis";
-import { Contract } from "ethers";
+import { Contract, N } from "ethers";
 
 const useSinglePool = () => {
   const { chainId } = useAppKitNetwork();
@@ -14,8 +14,8 @@ const useSinglePool = () => {
 
     const instance = new Contract(poolAddress, abis.UniswapV2PairAbi, provider);
 
-    const reserves = await instance.getReserves();
-
+    const reserves: [string, string] = await instance.getReserves();
+    if (!reserves) return ["0", "0"];
     return { reserves };
   };
 

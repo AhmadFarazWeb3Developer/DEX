@@ -21,13 +21,6 @@ const AddLiquidityPage = () => {
   const { address, isConnected } = useAppKitAccount();
   const { addLiquidity, isAddingLiquidity } = useAddLiquidity();
 
-  useEffect(() => {
-    console.log(tokenA);
-    console.log(tokenB);
-    console.log(amountADesired);
-    console.log(amountBDesired);
-  }, [tokenA, tokenB, amountADesired, amountBDesired]);
-
   const handleAddLiquidity = async () => {
     if (!address || !isConnected) {
       toast.error("Please connected wallet!", {

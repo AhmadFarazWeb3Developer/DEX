@@ -45,7 +45,6 @@ const RemoveLiquidityPage = () => {
             Remove Liquidity
           </h1>
 
-          {/* Token A */}
           <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-4 relative">
             <div className="flex justify-between items-center">
               <TokenButton
@@ -60,7 +59,6 @@ const RemoveLiquidityPage = () => {
             )}
           </div>
 
-          {/* Token B */}
           <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-4 relative">
             <div className="flex justify-between items-center">
               <TokenButton

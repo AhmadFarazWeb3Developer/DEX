@@ -9,8 +9,8 @@ import Navbar from "../components/Navbar";
 const CreatePoolPage = () => {
   const [tokenAAddress, setTokenAAddress] = useState("");
   const [tokenBAddress, setTokenBAddress] = useState("");
-  const [tokenAName, setTokenAName] = useState("");
-  const [tokenBName, setTokenBName] = useState("");
+  const [tokenASymbol, setTokenASymbol] = useState("");
+  const [tokenBSymbol, setTokenBSymbol] = useState("");
 
   const [tokenIcon, setTokenIcon] = useState({
     tokenAIcon: "",
@@ -34,8 +34,8 @@ const CreatePoolPage = () => {
     const bool = await createPair(
       tokenAAddress,
       tokenBAddress,
-      tokenAName,
-      tokenBName
+      tokenASymbol,
+      tokenBSymbol
     );
     if (bool === true) setTokenAAddress("");
     if (bool === true) setTokenBAddress("");
@@ -56,7 +56,7 @@ const CreatePoolPage = () => {
       const icon = TOKEN_ICONS[tokenName];
 
       setTokenIcon((prev) => ({ ...prev, tokenAIcon: icon }));
-      setTokenAName(tokenName);
+      setTokenASymbol(tokenName);
     };
 
     verify();
@@ -77,7 +77,7 @@ const CreatePoolPage = () => {
       const icon = TOKEN_ICONS[tokenName];
 
       setTokenIcon((prev) => ({ ...prev, tokenBIcon: icon }));
-      setTokenBName(tokenName);
+      setTokenBSymbol(tokenName);
     };
 
     verify();

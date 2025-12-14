@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import useAllPools from "../blockchain-interaction/useAllPools";
 import { TOKEN_ICONS } from "../constants/tokenIcons";
-import useSinglePool from "../blockchain-interaction/useSinglePool";
 import { CopyIcon } from "lucide-react";
 import { PoolType } from "@/types/PoolType";
+import { formatEther } from "ethers";
+import useSinglePool from "../blockchain-interaction/useSinglePool";
+import useAllPools from "../blockchain-interaction/useAllPools";
+import { calculateTVL } from "../lib/calculateTVL";
 
 const Pools = () => {
   const [pools, setPools] = useState<PoolType[]>([]);
@@ -18,12 +20,19 @@ const Pools = () => {
       const pairs: PoolType[] = poolsData.pairs;
       const formattedPools: PoolType[] = await Promise.all(
         pairs.map(async (pair) => {
-          const poolInfo = await singlePool(pair.pairAddress);
+          const poolReserves = await singlePool(pair.pairAddress);
+          const reserves = poolReserves?.reserves || ["0", "0"];
+
+          console.log("symbol : ", pair.tokensSymbol);
+
+          const tvl = await calculateTVL(reserves, pair.tokensSymbol);
+
           return {
             pair: pair.pair,
             pairAddress: pair.pairAddress,
-            tokensName: pair.tokensName,
-            poolReserves: poolInfo?.reserves || ["0", "0"],
+            tokensSymbol: pair.tokensSymbol,
+            poolReserves: reserves,
+            tvl,
           };
         })
       );
@@ -71,6 +80,7 @@ const Pools = () => {
                 <th className="p-4 w-[5%] text-left">#</th>
                 <th className="p-4 w-[35%] text-left">Pool</th>
                 <th className="p-4 w-[25%] text-left">Reserves</th>
+                <th className="p-4 w-[25%] text-left">TVL</th>
                 <th className="p-4 w-[35%] text-left">Address</th>
               </tr>
             </thead>
@@ -94,34 +104,40 @@ const Pools = () => {
 
                     <td className="p-4 flex items-center gap-3">
                       <div className="flex -space-x-2">
-                        {attribute.tokensName.map((tokenName, idx) => (
+                        {attribute.tokensSymbol.map((tokensSymbol, idx) => (
                           <div
                             key={idx}
                             className="w-8 h-8 rounded-full bg-[#0b1e13] border-2 border-gray-700 flex items-center justify-center overflow-hidden"
                           >
-                            {TOKEN_ICONS[tokenName] ? (
+                            {TOKEN_ICONS[tokensSymbol] ? (
                               <img
-                                src={TOKEN_ICONS[tokenName]}
-                                alt={tokenName}
+                                src={TOKEN_ICONS[tokensSymbol]}
+                                alt={tokensSymbol}
                                 className="w-full h-full object-cover"
                               />
                             ) : (
                               <span className="text-xs font-bold text-white">
-                                {tokenName.slice(0, 2)}
+                                {tokensSymbol.slice(0, 2)}
                               </span>
                             )}
                           </div>
                         ))}
                       </div>
                       <div className="font-semibold text-white">
-                        {attribute.tokensName.join(" / ").toUpperCase()}
+                        {attribute.tokensSymbol.join(" / ").toUpperCase()}
                       </div>
                     </td>
 
                     <td className="p-4 text-white font-semibold">
                       {attribute.poolReserves
-                        ? `${attribute.poolReserves[0]} / ${attribute.poolReserves[1]}`
+                        ? `${formatEther(
+                            attribute.poolReserves[0]
+                          )} / ${formatEther(attribute.poolReserves[1])}`
                         : "-"}
+                    </td>
+
+                    <td className="p-4 text-white font-semibold">
+                      {formatLargeNumber(attribute.tvl)}
                     </td>
 
                     <td className="p-4 flex items-center gap-2">
@@ -147,3 +163,14 @@ const Pools = () => {
 };
 
 export default Pools;
+
+export const formatLargeNumber = (value: number | string): string => {
+  const num = Number(value);
+  if (isNaN(num)) return "0";
+
+  if (num >= 1_000_000_000) return (num / 1_000_000_000).toFixed(2) + "B";
+  if (num >= 1_000_000) return (num / 1_000_000).toFixed(2) + "M";
+  if (num >= 1_000) return (num / 1_000).toFixed(2) + "K";
+
+  return num.toString();
+};

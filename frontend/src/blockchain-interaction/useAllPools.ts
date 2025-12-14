@@ -2,8 +2,6 @@ import useReadInstances from "./helper/useReadInstances";
 import { toast } from "sonner";
 
 const useAllPools = () => {
-  const { readInstances } = useReadInstances();
-
   const allPools = async () => {
     try {
       const response = await fetch(
@@ -14,6 +12,8 @@ const useAllPools = () => {
       if (!pairs) {
         return undefined;
       }
+
+      console.log("pairs : ", pairs);
 
       return { pairs };
     } catch (error: any) {
