@@ -12,6 +12,7 @@ const useWriteInstances = () => {
 
   const {
     UniswapV2FactoryAbi,
+    UniswapV2PairAbi,
     UniswapV2ERC20Abi,
     UniswapV2Router02MockAbi,
 
@@ -23,12 +24,14 @@ const useWriteInstances = () => {
     ChainlinkMockAbi,
     PolkadotMockAbi,
     UsdcMockAbi,
+    PolygonMockAbi,
   } = abis;
 
   const {
     UniswapV2FactoryAddress,
     UniswapV2ERC20Address,
     UniswapV2Router02MockAddress,
+
     DaiAddress,
     UsdtAddress,
     WethAddress,
@@ -37,6 +40,7 @@ const useWriteInstances = () => {
     ChainlinkAddress,
     PolkadotAddress,
     UsdcAddress,
+    PolygonAddress,
   } = addresses;
 
   const writeInstances = async () => {
@@ -89,6 +93,11 @@ const useWriteInstances = () => {
       PolkadotMockAbi,
       signer
     );
+    const polygonMockInstance = new Contract(
+      PolygonAddress,
+      PolygonMockAbi,
+      signer
+    );
 
     return {
       uniswapV2FactoryInstance,
@@ -103,6 +112,7 @@ const useWriteInstances = () => {
       chainlinkMockInstance,
       polkadotMockInstance,
       usdcMockInstance,
+      polygonMockInstance,
     };
   };
 

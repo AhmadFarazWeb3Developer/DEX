@@ -12,12 +12,12 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  const handlePoolSelect = (value) => {
+  const handlePoolSelect = (value: string) => {
     setPoolValue(value);
     setOpenPool(false);
   };
 
-  const handleLiqSelect = (value) => {
+  const handleLiqSelect = (value: string) => {
     setLiqValue(value);
     setOpenLiq(false);
   };

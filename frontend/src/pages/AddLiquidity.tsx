@@ -1,95 +1,136 @@
-import { useState } from "react";
-import { TOKEN_ICONS } from "../constants/tokenIcons";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import SelectToken from "../components/cards/SelectToken";
+import TokenButton from "../components/cards/TokenButton";
+import { TokenType } from "../types/TokenType";
+import useAddLiquidity from "../blockchain-interaction/useAddLiquidity";
+import { useAppKitAccount } from "@reown/appkit/react";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import Navbar from "../components/Navbar";
 
 const AddLiquidityPage = () => {
-  const [tokenA, setTokenA] = useState("");
-  const [tokenB, setTokenB] = useState("");
-  const [amountA, setAmountA] = useState("");
-  const [amountB, setAmountB] = useState("");
+  const [amountADesired, setAmountADesired] = useState("");
+  const [amountBDesired, setAmountBDesired] = useState("");
+
+  const [tokenA, setTokenA] = useState<TokenType | null>(null);
+  const [tokenB, setTokenB] = useState<TokenType | null>(null);
+
+  const [isTokenASelected, setIsTokenASelected] = useState(false);
+  const [isTokenBSelected, setIsTokenBSelected] = useState(false);
+
+  const { address, isConnected } = useAppKitAccount();
+  const { addLiquidity, isAddingLiquidity } = useAddLiquidity();
+
+  useEffect(() => {
+    console.log(tokenA);
+    console.log(tokenB);
+    console.log(amountADesired);
+    console.log(amountBDesired);
+  }, [tokenA, tokenB, amountADesired, amountBDesired]);
+
+  const handleAddLiquidity = async () => {
+    if (!address || !isConnected) {
+      toast.error("Please connected wallet!", {
+        action: { label: "Close", onClick: () => {} },
+      });
+    }
+
+    if (!tokenA?.address || !tokenB?.address) {
+      toast.error("Missing token!", {
+        action: { label: "Close", onClick: () => {} },
+      });
+    }
+    await addLiquidity(
+      tokenA?.address,
+      tokenB?.address,
+      amountADesired,
+      amountBDesired,
+      address
+    );
+  };
 
   return (
-    <div className="min-h-screen bg-[#0b1e13] p-6 flex justify-center items-start">
-      <div className="w-full max-w-md bg-[#12291a] rounded-2xl p-6 shadow-xl">
-        <h1 className="text-3xl font-bold text-white mb-6">Add Liquidity</h1>
-        <p className="text-slate-400 text-sm mb-6">
-          Provide liquidity to your favorite pools and earn fees
-        </p>
+    <>
+      <div className="w-full">
+        <Navbar />
+        <div className="min-h-screen bg-[#0b1e13] p-6 flex justify-center items-start">
+          <div className="w-1/2 bg-[#12291a] rounded-2xl p-6 shadow-xl">
+            <h1 className="text-3xl font-bold text-white mb-6">
+              Add Liquidity
+            </h1>
+            <p className="text-slate-400 text-sm mb-6">
+              Provide liquidity to your favorite pools and earn fees
+            </p>
 
-        <div className="mb-4">
-          <p className="text-slate-400 text-xs mb-1">Token A</p>
-          <div className="flex items-center gap-2 bg-[#0B1E13] rounded-lg p-3 border border-green-700/40">
-            <div className="w-8 h-8 rounded-full bg-[#0b1e13] flex items-center justify-center overflow-hidden">
-              {TOKEN_ICONS[tokenA.toLowerCase()] ? (
-                <img
-                  src={TOKEN_ICONS[tokenA.toLowerCase()]}
-                  alt={tokenA}
-                  className="w-full h-full object-cover"
+            <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-4 relative">
+              <div className="flex justify-between items-center">
+                <input
+                  value={amountADesired}
+                  onChange={(e) => setAmountADesired(e.target.value)}
+                  placeholder="0.0"
+                  className="bg-transparent text-white text-xl outline-none w-1/2"
                 />
-              ) : (
-                <span className="text-xs font-bold text-green-400">
-                  {tokenA?.slice(0, 2) || "?"}
-                </span>
+
+                <TokenButton
+                  token={tokenA}
+                  onClick={() => setIsTokenASelected((p) => !p)}
+                />
+              </div>
+
+              {isTokenASelected && (
+                <div className="absolute right-0 mt-3 z-50 w-full">
+                  <SelectToken setToken={setTokenA} />
+                </div>
               )}
             </div>
-            <input
-              type="text"
-              placeholder="Token symbol (e.g., DAI)"
-              value={tokenA}
-              onChange={(e) => setTokenA(e.target.value)}
-              className="flex-1 bg-transparent text-white text-lg outline-none"
-            />
-          </div>
-          <input
-            type="number"
-            placeholder="Amount"
-            value={amountA}
-            onChange={(e) => setAmountA(e.target.value)}
-            className="w-full mt-2 p-3 rounded-lg bg-[#0B1E13] text-white text-lg outline-none border border-green-700/30"
-          />
-        </div>
 
-        <div className="mb-6">
-          <p className="text-slate-400 text-xs mb-1">Token B</p>
-          <div className="flex items-center gap-2 bg-[#0B1E13] rounded-lg p-3 border border-green-700/40">
-            <div className="w-8 h-8 rounded-full bg-[#0b1e13] flex items-center justify-center overflow-hidden">
-              {TOKEN_ICONS[tokenB.toLowerCase()] ? (
-                <img
-                  src={TOKEN_ICONS[tokenB.toLowerCase()]}
-                  alt={tokenB}
-                  className="w-full h-full object-cover"
+            <p className="text-gray-300 text-sm mb-1">Token B</p>
+            <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-6 relative">
+              <div className="flex justify-between items-center">
+                <input
+                  value={amountBDesired}
+                  onChange={(e) => setAmountBDesired(e.target.value)}
+                  placeholder="0.0"
+                  className="bg-transparent text-white text-xl outline-none w-1/2"
                 />
-              ) : (
-                <span className="text-xs font-bold text-green-400">
-                  {tokenB?.slice(0, 2) || "?"}
-                </span>
+
+                <div>
+                  <TokenButton
+                    token={tokenB}
+                    onClick={() => setIsTokenBSelected((p) => !p)}
+                  />
+                </div>
+              </div>
+
+              {isTokenBSelected && (
+                <div className="absolute right-0 mt-3 z-50 w-full">
+                  <SelectToken setToken={setTokenB} />
+                </div>
               )}
             </div>
-            <input
-              type="text"
-              placeholder="Token symbol (e.g., USDC)"
-              value={tokenB}
-              onChange={(e) => setTokenB(e.target.value)}
-              className="flex-1 bg-transparent text-white text-lg outline-none"
-            />
-          </div>
-          <input
-            type="number"
-            placeholder="Amount"
-            value={amountB}
-            onChange={(e) => setAmountB(e.target.value)}
-            className="w-full mt-2 p-3 rounded-lg bg-[#0B1E13] text-white text-lg outline-none border border-green-700/30"
-          />
-        </div>
 
-        <button
-          disabled={!tokenA || !tokenB || !amountA || !amountB}
-          className="w-full py-3 bg-green-700 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors disabled:opacity-50"
-        >
-          Add Liquidity
-        </button>
+            {!isAddingLiquidity ? (
+              <button
+                onClick={handleAddLiquidity}
+                disabled={
+                  !tokenA || !tokenB || !amountADesired || !amountBDesired
+                }
+                className="w-full py-3 bg-[#00C084] hover:bg-[#00b178] text-white font-semibold rounded-lg transition disabled:opacity-50"
+              >
+                Add Liquidity
+              </button>
+            ) : (
+              <button
+                disabled={isAddingLiquidity}
+                className="w-full py-3 bg-[#00C084] hover:bg-[#00b178] text-white font-semibold rounded-lg transition disabled:opacity-50"
+              >
+                <Loader2 /> Adding Liquidity
+              </button>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

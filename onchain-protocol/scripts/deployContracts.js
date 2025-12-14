@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, writeFileSync, writeSync } from "fs";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import hre from "hardhat";
 
 const { ethers } = hre;

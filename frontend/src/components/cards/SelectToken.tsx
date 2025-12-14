@@ -19,13 +19,15 @@ const SelectToken = ({ setToken }: setTokenProp) => {
           icon: TOKEN_ICONS[token.symbol.toLowerCase()],
         };
       });
+      console.log(updatedTokens);
+
       setTokens(updatedTokens);
     };
     init();
   }, []);
 
   return (
-    <div className="rounded-md bg-[#2b4635] p-4 w-full">
+    <div className="rounded-md bg-[#2b4635] p-4 w-full cursor-pointer">
       <div className="flex items-center bg-[#1f3324] rounded-md px-3 py-2 mb-4">
         <Search size={20} className="text-white mr-2" />
         <input
@@ -38,7 +40,7 @@ const SelectToken = ({ setToken }: setTokenProp) => {
       <div className="max-h-[420px] overflow-y-auto pr-2 space-y-2">
         {tokens.map((token: TokenType) => (
           <div
-            onClick={() => setToken((prev) => [...prev, token])}
+            onClick={() => setToken(token)}
             key={token.name}
             className="flex items-center justify-between p-3 rounded-md bg-[#1f3324] hover:bg-[#12291a] transition-colors"
           >
