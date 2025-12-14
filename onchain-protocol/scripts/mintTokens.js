@@ -42,6 +42,7 @@ async function main() {
 
   const to = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266";
   const tokensAmount = ethers.parseUnits("1000", 18);
+  const routerAddress = addresses.UniswapV2Router02MockAddress;
 
   for (const [key, tokenInstance] of Object.entries(instances)) {
     console.log(
@@ -50,6 +51,14 @@ async function main() {
     const tx = await tokenInstance.transferTokens(to, tokensAmount);
     await tx.wait();
     console.log(`${key} transferred successfully`);
+  }
+
+  // Approving the router for each token before sending liquidity
+  for (const [key, tokenInstance] of Object.entries(instances)) {
+    console.log(`Approving ${key} for router...`);
+    const approveTx = await tokenInstance.approve(routerAddress, tokensAmount);
+    await approveTx.wait();
+    console.log(`${key} approved successfully`);
   }
 }
 

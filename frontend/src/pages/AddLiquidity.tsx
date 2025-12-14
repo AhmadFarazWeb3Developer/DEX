@@ -109,24 +109,30 @@ const AddLiquidityPage = () => {
               )}
             </div>
 
-            {!isAddingLiquidity ? (
-              <button
-                onClick={handleAddLiquidity}
-                disabled={
-                  !tokenA || !tokenB || !amountADesired || !amountBDesired
-                }
-                className="w-full py-3 bg-[#00C084] hover:bg-[#00b178] text-white font-semibold rounded-lg transition disabled:opacity-50"
-              >
-                Add Liquidity
-              </button>
-            ) : (
-              <button
-                disabled={isAddingLiquidity}
-                className="w-full py-3 bg-[#00C084] hover:bg-[#00b178] text-white font-semibold rounded-lg transition disabled:opacity-50"
-              >
-                <Loader2 /> Adding Liquidity
-              </button>
-            )}
+            <button
+              onClick={handleAddLiquidity}
+              disabled={
+                !tokenA ||
+                !tokenB ||
+                !amountADesired ||
+                !amountBDesired ||
+                isAddingLiquidity
+              }
+              className={`w-full py-3 text-white font-semibold rounded-lg transition ${
+                isAddingLiquidity
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-[#00C084] hover:bg-[#00b178]"
+              }`}
+            >
+              {isAddingLiquidity ? (
+                <div className="flex items-center justify-center gap-2">
+                  <Loader2 className="animate-spin h-5 w-5" />
+                  Adding Liquidity
+                </div>
+              ) : (
+                "Add Liquidity"
+              )}
+            </button>
           </div>
         </div>
       </div>
