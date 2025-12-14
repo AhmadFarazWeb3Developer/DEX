@@ -7,7 +7,8 @@ import ReownProvider from "./context/ReownProvider.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ExplorePoolPage from "./pages/ExplorePoolsPage.tsx";
 import CreatePoolPage from "./pages/CreatePoolPage.tsx";
-import AddLiquidity from "./pages/AddLiquidity.tsx";
+import RemoveLiquidityPage from "./pages/RemoveLiquidityPage.tsx";
+import AddLiquidityPage from "./pages/AddLiquidityPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/explore-pools", element: <ExplorePoolPage /> },
       { path: "/create-pool", element: <CreatePoolPage /> },
-      { path: "/add-liquidity", element: <AddLiquidity /> },
+      { path: "/add-liquidity", element: <AddLiquidityPage /> },
+      { path: "/remove-liquidity", element: <RemoveLiquidityPage /> },
     ],
   },
 ]);

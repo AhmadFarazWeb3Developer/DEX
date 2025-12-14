@@ -33,16 +33,18 @@ const AddLiquidityPage = () => {
       toast.error("Please connected wallet!", {
         action: { label: "Close", onClick: () => {} },
       });
+      return;
     }
 
     if (!tokenA?.address || !tokenB?.address) {
       toast.error("Missing token!", {
         action: { label: "Close", onClick: () => {} },
       });
+      return;
     }
     await addLiquidity(
-      tokenA?.address,
-      tokenB?.address,
+      tokenA.address,
+      tokenB.address,
       amountADesired,
       amountBDesired,
       address

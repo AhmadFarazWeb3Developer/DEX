@@ -139,7 +139,10 @@ const Navbar = () => {
             </div>
             <div className="h-px bg-[#2b4635]" />
             <div
-              onClick={() => handleLiqSelect("remove")}
+              onClick={() => {
+                handleLiqSelect("remove");
+                navigate("remove-liquidity");
+              }}
               className="px-4 py-2  hover:bg-[#12291a] sm:text-lg transition-colors duration-200 cursor-pointer"
             >
               Remove Liquidity
