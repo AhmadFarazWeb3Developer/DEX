@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectToken from "../components/cards/SelectToken";
 import TokenButton from "../components/cards/TokenButton";
 import { TokenType } from "../types/TokenType";
@@ -7,6 +7,7 @@ import { useAppKitAccount } from "@reown/appkit/react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import Navbar from "../components/Navbar";
+import useLpTokens from "../blockchain-interaction/helper/useLpTokens";
 
 const RemoveLiquidityPage = () => {
   const [tokenA, setTokenA] = useState<TokenType | null>(null);
@@ -15,9 +16,12 @@ const RemoveLiquidityPage = () => {
 
   const [isTokenASelected, setIsTokenASelected] = useState(false);
   const [isTokenBSelected, setIsTokenBSelected] = useState(false);
+  const [shakeInput, setShakeInput] = useState(false);
 
   const { address, isConnected } = useAppKitAccount();
   const { removeLiquidity, isRemovingLiquidity } = useRemoveLiquidity();
+
+  const { fetchLpTokens, lpTokens } = useLpTokens();
 
   const handleRemoveLiquidity = async () => {
     if (!address || !isConnected) {
@@ -35,6 +39,10 @@ const RemoveLiquidityPage = () => {
 
     await removeLiquidity(tokenA.address, tokenB.address, liquidity, address);
   };
+
+  useEffect(() => {
+    fetchLpTokens(tokenA?.address, tokenB?.address, address);
+  }, [tokenA, tokenB, address]);
 
   return (
     <div className=" w-full">
@@ -73,22 +81,85 @@ const RemoveLiquidityPage = () => {
             )}
           </div>
 
-          {/* Liquidity Input */}
-          <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-6">
+          {/* <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-6">
             <input
               type="text"
               placeholder="Liquidity amount"
               value={liquidity}
-              onChange={(e) => setLiquidity(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (Number(value) > Number(lpTokens)) {
+                  setLiquidity(lpTokens);
+                } else {
+                  setLiquidity(value);
+                }
+              }}
+             
+              className="bg-transparent text-white text-xl outline-none w-full"
+            />
+          </div> */}
+          <div
+            className={`bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-6
+  ${shakeInput ? "animate-shake border-red-500" : ""}`}
+          >
+            <input
+              type="text"
+              placeholder="Liquidity amount"
+              value={liquidity}
+              onChange={(e) => {
+                const value = e.target.value;
+
+                if (!value) {
+                  setLiquidity("");
+                  return;
+                }
+
+                // block non-numbers
+                if (isNaN(Number(value))) return;
+
+                // HARD LIMIT ENFORCEMENT
+                if (Number(value) > Number(lpTokens)) {
+                  setShakeInput(true);
+                  setLiquidity("");
+
+                  toast.error("Stay within your liquidity limit");
+
+                  // remove shake after animation
+                  setTimeout(() => setShakeInput(false), 300);
+                  return;
+                }
+
+                setLiquidity(value);
+              }}
               className="bg-transparent text-white text-xl outline-none w-full"
             />
           </div>
 
-          {/* Remove Button */}
+          <div className="mt-4 rounded-xl border border-[#1f3528] bg-[#0F2A1D] p-4 flex justify-between items-center">
+            <div>
+              <p className="text-xs text-gray-400">Your LP Tokens</p>
+              <p className="text-lg font-semibold text-white">
+                {Number(lpTokens).toLocaleString(undefined, {
+                  maximumFractionDigits: 6,
+                })}
+              </p>
+            </div>
+
+            <button
+              onClick={() => setLiquidity(lpTokens)}
+              className="px-3 py-1.5 text-xs font-semibold rounded-lg
+               bg-[#133022] text-[#00C084] hover:bg-[#17402c] transition"
+            >
+              MAX
+            </button>
+          </div>
+
           {!isRemovingLiquidity ? (
             <button
               onClick={handleRemoveLiquidity}
-              disabled={!tokenA || !tokenB || !liquidity}
+              disabled={
+                !tokenA || !tokenB || !liquidity || Number(liquidity) === 0
+              }
               className="w-full py-3 bg-[#FF4D4D] hover:bg-[#E63939] text-white font-semibold rounded-lg transition disabled:opacity-50"
             >
               Remove Liquidity

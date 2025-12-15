@@ -6,17 +6,20 @@ import { formatEther } from "ethers";
 import useSinglePool from "../blockchain-interaction/useSinglePool";
 import useAllPools from "../blockchain-interaction/useAllPools";
 import { calculateTVL } from "../lib/calculateTVL";
+import { formatLargeNumber } from "../lib/formateLargeNumber";
 
 const Pools = () => {
   const [pools, setPools] = useState<PoolType[]>([]);
   const { allPools } = useAllPools();
   const { singlePool } = useSinglePool();
+  const [totalTVL, setTotalTVL] = useState(0);
 
   useEffect(() => {
     const fetchPoolsAndReserves = async () => {
       const poolsData = await allPools();
       if (!poolsData) return;
 
+      let totalTvl: number = 0;
       const pairs: PoolType[] = poolsData.pairs;
       const formattedPools: PoolType[] = await Promise.all(
         pairs.map(async (pair) => {
@@ -27,6 +30,8 @@ const Pools = () => {
 
           const tvl = await calculateTVL(reserves, pair.tokensSymbol);
 
+          totalTvl += tvl;
+
           return {
             pair: pair.pair,
             pairAddress: pair.pairAddress,
@@ -36,6 +41,7 @@ const Pools = () => {
           };
         })
       );
+      setTotalTVL(totalTvl);
 
       setPools(formattedPools);
     };
@@ -69,7 +75,9 @@ const Pools = () => {
           </div>
           <div className="bg-[#12291a] rounded-2xl p-6 hover:bg-[#0B1E13] transition-all">
             <div className="text-gray-400 text-sm mb-1">Total TVL</div>
-            <div className="text-white text-3xl font-bold">$0.00</div>
+            <div className="text-white text-3xl font-bold">
+              ${formatLargeNumber(totalTVL)}
+            </div>
           </div>
         </div>
 
@@ -130,18 +138,23 @@ const Pools = () => {
 
                     <td className="p-4 text-white font-semibold">
                       {attribute.poolReserves
-                        ? `${formatEther(
-                            attribute.poolReserves[0]
-                          )} / ${formatEther(attribute.poolReserves[1])}`
+                        ? `${parseFloat(
+                            formatEther(attribute.poolReserves[0])
+                          ).toFixed(2)} / ${parseFloat(
+                            formatEther(attribute.poolReserves[1])
+                          ).toFixed(2)}`
                         : "-"}
                     </td>
 
                     <td className="p-4 text-white font-semibold">
-                      {formatLargeNumber(attribute.tvl)}
+                      ${" "}
+                      {formatLargeNumber(
+                        parseFloat(attribute.tvl as any).toFixed(2)
+                      )}
                     </td>
 
                     <td className="p-4 flex items-center gap-2">
-                      <code className="py-1.5 rounded-lg text-white text-sm font-mono truncate">
+                      <code className="py-1.5 rounded-lg text-white text-sm font-mono ">
                         {truncateAddress(attribute.pairAddress)}
                       </code>
                       <CopyIcon
@@ -163,14 +176,3 @@ const Pools = () => {
 };
 
 export default Pools;
-
-export const formatLargeNumber = (value: number | string): string => {
-  const num = Number(value);
-  if (isNaN(num)) return "0";
-
-  if (num >= 1_000_000_000) return (num / 1_000_000_000).toFixed(2) + "B";
-  if (num >= 1_000_000) return (num / 1_000_000).toFixed(2) + "M";
-  if (num >= 1_000) return (num / 1_000).toFixed(2) + "K";
-
-  return num.toString();
-};

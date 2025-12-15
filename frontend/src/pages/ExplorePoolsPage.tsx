@@ -4,11 +4,13 @@ import { useState } from "react";
 import Pools from "../components/Pools";
 import Tokens from "../components/Tokens";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const ExplorePoolsPage = () => {
   const [isPoolSet, setPool] = useState(true);
   const [isTokensSet, setTokens] = useState(false);
 
+  const navigate = useNavigate();
   return (
     <div className=" w-full">
       <Navbar />
@@ -21,7 +23,11 @@ const ExplorePoolsPage = () => {
                 setTokens(true);
                 setPool(false);
               }}
-              className="text-white px-4 py-2 rounded-lg hover:bg-[#133022] transition"
+              className={`text-white px-4 py-2 rounded-lg transition ${
+                isTokensSet
+                  ? "bg-[#133022] hover:bg-[#0F261A]"
+                  : "hover:bg-[#133022]"
+              }`}
             >
               Tokens
             </button>
@@ -30,14 +36,21 @@ const ExplorePoolsPage = () => {
                 setPool(true);
                 setTokens(false);
               }}
-              className="text-white px-4 py-2 rounded-lg bg-[#133022] hover:bg-[#0F261A] transition"
+              className={`text-white px-4 py-2 rounded-lg transition ${
+                isPoolSet
+                  ? "bg-[#133022] hover:bg-[#0F261A]"
+                  : "hover:bg-[#133022]"
+              }`}
             >
               Pools
             </button>
           </div>
 
           <div className="flex flex-row gap-4 items-center">
-            <button className="bg-[#00C084] text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#00a870] transition">
+            <button
+              onClick={() => navigate("/explore-pools/add-liquidity")}
+              className="bg-[#00C084] text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#00a870] transition"
+            >
               Add Liquidity
             </button>
 

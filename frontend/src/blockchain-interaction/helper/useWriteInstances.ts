@@ -49,7 +49,7 @@ const useWriteInstances = () => {
     const numericChainId =
       typeof chainId === "string" ? parseInt(chainId) : chainId;
 
-    const { signer } = await getSigner(numericChainId);
+    const { signer } = await getSigner();
 
     // FACTORY & ROUTER
     const uniswapV2FactoryInstance = new Contract(

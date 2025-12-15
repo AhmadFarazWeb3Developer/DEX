@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import useTokens from "../blockchain-interaction/helper/useTokens";
 import { TokenType } from "../types/TokenType";
 import { TOKEN_ICONS } from "../constants/tokenIcons";
+import { formatLargeNumber } from "../lib/formateLargeNumber";
+import { formatEther } from "ethers";
 
 const Tokens = () => {
   const [tokens, setTokens] = useState<TokenType[]>([]);
@@ -21,13 +23,12 @@ const Tokens = () => {
 
   return (
     <div className="flex flex-col w-full space-y-2">
-      {/* Table Header */}
       <div className="flex px-4 py-3 text-gray-400 text-sm font-medium border-b border-[#1f3528]">
         <p className="flex-[0.5]">#</p>
         <p className="flex-[2]">Token</p>
         <p className="flex-[2]">Name</p>
         <p className="flex-[2]">Symbol</p>
-        <p className="flex-[1]">Total Supply</p>
+        <p className="flex-[2]">Total Supply</p>
         <p className="flex-[2]">Address</p>
       </div>
 
@@ -45,7 +46,7 @@ const Tokens = () => {
               className="w-7 h-7 rounded-full border border-gray-700"
             />
             <span className="text-white font-semibold truncate">
-              {token.name}
+              {token.symbol}
             </span>
           </div>
 
@@ -53,7 +54,9 @@ const Tokens = () => {
 
           <p className="text-gray-300 flex-[2] truncate">{token.symbol}</p>
 
-          <p className="text-gray-300 flex-[1] truncate">{token.totalSupply}</p>
+          <p className="text-gray-300 flex-[2] ">
+            {formatLargeNumber(formatEther(token.totalSupply))}
+          </p>
 
           <p className="text-gray-300 flex-[2] truncate">
             {`${token.address.slice(0, 6)}...${token.address.slice(-4)}`}
