@@ -81,23 +81,6 @@ const RemoveLiquidityPage = () => {
             )}
           </div>
 
-          {/* <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-6">
-            <input
-              type="text"
-              placeholder="Liquidity amount"
-              value={liquidity}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (Number(value) > Number(lpTokens)) {
-                  setLiquidity(lpTokens);
-                } else {
-                  setLiquidity(value);
-                }
-              }}
-             
-              className="bg-transparent text-white text-xl outline-none w-full"
-            />
-          </div> */}
           <div
             className={`bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-6
   ${shakeInput ? "animate-shake border-red-500" : ""}`}

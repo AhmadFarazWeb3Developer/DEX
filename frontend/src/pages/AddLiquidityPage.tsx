@@ -113,7 +113,7 @@ const AddLiquidityPage = () => {
                 !amountBDesired ||
                 isAddingLiquidity
               }
-              className={`w-full py-3 text-white font-semibold rounded-lg transition ${
+              className={`w-full py-3 text-white font-semibold rounded-lg transition cursor-pointer ${
                 isAddingLiquidity
                   ? "bg-gray-500 cursor-not-allowed"
                   : "bg-[#00C084] hover:bg-[#00b178]"
