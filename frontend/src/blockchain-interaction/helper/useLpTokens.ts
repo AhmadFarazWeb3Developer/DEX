@@ -17,7 +17,7 @@ const useLpTokens = () => {
     const instances = await readInstances();
     if (!instances) return;
 
-    const { uniswapV2FactoryInstance, UniswapV2ERC20Instance } = instances;
+    const { uniswapV2FactoryInstance, uniswapV2ERC20Instance } = instances;
 
     const pairAddress = await uniswapV2FactoryInstance.getPair(tokenA, tokenB);
 
@@ -28,7 +28,7 @@ const useLpTokens = () => {
     }
 
     const balance: bigint = await (
-      UniswapV2ERC20Instance.attach(pairAddress) as any
+      uniswapV2ERC20Instance.attach(pairAddress) as any
     ).balanceOf(user);
 
     setLpTokens(formatUnits(balance, 18));

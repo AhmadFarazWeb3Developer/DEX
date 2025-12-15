@@ -10,26 +10,30 @@ import { formatLargeNumber } from "../lib/formateLargeNumber";
 
 const Pools = () => {
   const [pools, setPools] = useState<PoolType[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const { allPools } = useAllPools();
   const { singlePool } = useSinglePool();
   const [totalTVL, setTotalTVL] = useState(0);
 
   useEffect(() => {
     const fetchPoolsAndReserves = async () => {
+      setLoading(true);
       const poolsData = await allPools();
-      if (!poolsData) return;
+      if (!poolsData) {
+        setLoading(false);
+        return;
+      }
 
       let totalTvl: number = 0;
       const pairs: PoolType[] = poolsData.pairs;
       const formattedPools: PoolType[] = await Promise.all(
         pairs.map(async (pair) => {
           const poolReserves = await singlePool(pair.pairAddress);
-          const reserves = poolReserves?.reserves || ["0", "0"];
-
-          console.log("symbol : ", pair.tokensSymbol);
+          const reserves = poolReserves?.reserves;
+          const lpTokens = poolReserves?.lpTokens;
 
           const tvl = await calculateTVL(reserves, pair.tokensSymbol);
-
           totalTvl += tvl;
 
           return {
@@ -38,12 +42,14 @@ const Pools = () => {
             tokensSymbol: pair.tokensSymbol,
             poolReserves: reserves,
             tvl,
+            lpTokens,
           };
         })
       );
-      setTotalTVL(totalTvl);
 
+      setTotalTVL(totalTvl);
       setPools(formattedPools);
+      setLoading(false);
     };
 
     fetchPoolsAndReserves();
@@ -51,6 +57,14 @@ const Pools = () => {
 
   const truncateAddress = (address: string) =>
     `${address.slice(0, 6)}...${address.slice(-4)}`;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white text-xl">
+        Loading pools...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0b1e13] p-6">
@@ -89,6 +103,7 @@ const Pools = () => {
                 <th className="p-4 w-[35%] text-left">Pool</th>
                 <th className="p-4 w-[25%] text-left">Reserves</th>
                 <th className="p-4 w-[25%] text-left">TVL</th>
+                <th className="p-4 w-[25%] text-left">LP Tokens</th>
                 <th className="p-4 w-[35%] text-left">Address</th>
               </tr>
             </thead>
@@ -153,6 +168,11 @@ const Pools = () => {
                       )}
                     </td>
 
+                    <td className="p-4 text-white font-semibold">
+                      {formatLargeNumber(
+                        parseFloat(attribute.lpTokens).toFixed(2)
+                      )}
+                    </td>
                     <td className="p-4 flex items-center gap-2">
                       <code className="py-1.5 rounded-lg text-white text-sm font-mono ">
                         {truncateAddress(attribute.pairAddress)}

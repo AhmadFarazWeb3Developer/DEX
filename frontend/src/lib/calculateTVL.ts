@@ -9,22 +9,22 @@ export const calculateTVL = async (
 ) => {
   let totalUSD = 0;
 
+  const resName = await fetch("https://api.coinpaprika.com/v1/coins");
+
+  const allTokens: any[] = await resName.json();
+
   for (let i = 0; i < tokensSymbol.length; i++) {
     const symbol = tokensSymbol[i];
     const reserve = reserves[i];
     if (!reserve) continue;
 
-    // Getting token name against symbol
     let tokenId = nameCache[symbol];
     if (!tokenId) {
       try {
-        const resName = await fetch(
-          `https://api.coingecko.com/api/v3/coins/list`
-        );
-        const allTokens = await resName.json();
         const tokenData = allTokens.find(
-          (t: any) => t.symbol.toLowerCase() === symbol.toLowerCase()
+          (t) => t.symbol.toLowerCase() === symbol.toLowerCase()
         );
+
         tokenId = tokenData?.id;
         nameCache[symbol] = tokenId ?? "";
       } catch (err) {
@@ -35,15 +35,15 @@ export const calculateTVL = async (
 
     if (!tokenId) continue;
 
-    // Getting USD price
+    // getting USD price from CoinPaprika
     let price = priceCache[symbol];
     if (price === undefined) {
       try {
         const resPrice = await fetch(
-          `https://api.coingecko.com/api/v3/simple/price?ids=${tokenId}&vs_currencies=usd`
+          `https://api.coinpaprika.com/v1/tickers/${tokenId}`
         );
         const data = await resPrice.json();
-        price = data[tokenId]?.usd ?? 0;
+        price = data?.quotes?.USD?.price ?? 0;
         priceCache[symbol] = price;
       } catch (err) {
         console.error(`Failed to fetch price for ${symbol}`, err);

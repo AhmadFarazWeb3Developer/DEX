@@ -3,10 +3,9 @@ dotenv.config();
 import express from "express";
 import connectDB from "./config/db.config.js";
 import cors from "cors";
+import PairsRouter from "./routes/Pairs.route.js";
 
 const app = express();
-
-import PairsRouter from "./routes/Pairs.route.js";
 
 const Port = process.env.PORT;
 

@@ -1,4 +1,3 @@
-import useReadInstances from "./helper/useReadInstances";
 import { toast } from "sonner";
 
 const useAllPools = () => {
@@ -12,8 +11,6 @@ const useAllPools = () => {
       if (!pairs) {
         return undefined;
       }
-
-      console.log("pairs : ", pairs);
 
       return { pairs };
     } catch (error: any) {

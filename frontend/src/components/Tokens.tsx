@@ -7,19 +7,30 @@ import { formatEther } from "ethers";
 
 const Tokens = () => {
   const [tokens, setTokens] = useState<TokenType[]>([]);
+  const [loading, setLoading] = useState(true);
   const { allTokens } = useTokens();
 
   useEffect(() => {
     const init = async () => {
+      setLoading(true);
       const { tokens } = await allTokens();
       const updatedTokens = tokens.map((token) => ({
         ...token,
         icon: TOKEN_ICONS[token.symbol.toLowerCase()],
       }));
       setTokens(updatedTokens);
+      setLoading(false); // stop loading
     };
     init();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[200px] text-white text-lg">
+        Loading tokens...
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full space-y-2">
@@ -37,7 +48,7 @@ const Tokens = () => {
           key={token.address}
           className="flex items-center px-4 py-3 bg-[#12291a] border border-[#1f3528] rounded-lg hover:bg-[#0B1E13] transition-colors shadow-sm"
         >
-          <p className=" text-gray-400 font-semibold flex-[0.5]">{index + 1}</p>
+          <p className="text-gray-400 font-semibold flex-[0.5]">{index + 1}</p>
 
           <div className="flex items-center space-x-2 flex-[2]">
             <img
@@ -51,13 +62,10 @@ const Tokens = () => {
           </div>
 
           <p className="text-gray-300 flex-[2] truncate">{token.name}</p>
-
           <p className="text-gray-300 flex-[2] truncate">{token.symbol}</p>
-
-          <p className="text-gray-300 flex-[2] ">
+          <p className="text-gray-300 flex-[2]">
             {formatLargeNumber(formatEther(token.totalSupply))}
           </p>
-
           <p className="text-gray-300 flex-[2] truncate">
             {`${token.address.slice(0, 6)}...${token.address.slice(-4)}`}
           </p>

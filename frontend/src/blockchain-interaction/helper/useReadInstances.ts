@@ -22,6 +22,7 @@ const useReadInstances = () => {
     ChainlinkMockAbi,
     PolkadotMockAbi,
     UsdcMockAbi,
+    PolygonMockAbi,
   } = abis;
 
   const {
@@ -36,6 +37,7 @@ const useReadInstances = () => {
     ChainlinkAddress,
     PolkadotAddress,
     UsdcAddress,
+    PolygonAddress,
   } = addresses;
 
   const readInstances = async () => {
@@ -51,7 +53,7 @@ const useReadInstances = () => {
       UniswapV2FactoryAbi,
       provider
     );
-    const UniswapV2ERC20Instance = new Contract(
+    const uniswapV2ERC20Instance = new Contract(
       UniswapV2ERC20Address,
       UniswapV2ERC20Abi,
       provider
@@ -87,10 +89,15 @@ const useReadInstances = () => {
       PolkadotMockAbi,
       provider
     );
+    const polygonMockInstance = new Contract(
+      PolygonAddress,
+      PolygonMockAbi,
+      provider
+    );
 
     return {
       uniswapV2FactoryInstance,
-      UniswapV2ERC20Instance,
+      uniswapV2ERC20Instance,
       uniswapV2Router02MockInstance,
 
       daiMockInstance,
@@ -101,6 +108,7 @@ const useReadInstances = () => {
       chainlinkMockInstance,
       polkadotMockInstance,
       usdcMockInstance,
+      polygonMockInstance,
     };
   };
 

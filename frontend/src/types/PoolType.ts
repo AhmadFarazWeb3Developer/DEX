@@ -4,4 +4,5 @@ export type PoolType = {
   tokensSymbol: string[];
   poolReserves: string[];
   tvl: number;
+  lpTokens: string;
 };

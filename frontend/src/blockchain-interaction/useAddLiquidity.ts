@@ -2,6 +2,7 @@ import { useState } from "react";
 import useWriteInstances from "./helper/useWriteInstances";
 import { decodeError } from "./helper/decodeError";
 import { ethers } from "ethers";
+import { toast } from "sonner";
 
 const useAddLiquidity = () => {
   const { writeInstances } = useWriteInstances();
@@ -39,6 +40,12 @@ const useAddLiquidity = () => {
       const recepit = await tx.wait();
 
       console.log(recepit);
+      if (recepit) {
+        toast.success(
+          `Liquidity added: ${amountADesired} / ${amountBDesired}`,
+          { action: { label: "Close", onClick: () => {} } }
+        );
+      }
     } catch (error) {
       decodeError(error);
     } finally {
