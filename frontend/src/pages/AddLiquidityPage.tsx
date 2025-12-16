@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import SelectToken from "../components/cards/SelectToken";
 import TokenButton from "../components/cards/TokenButton";
 import { TokenType } from "../types/TokenType";
@@ -57,6 +57,7 @@ const AddLiquidityPage = () => {
               Provide liquidity to your favorite pools and earn fees
             </p>
 
+            <p className="text-gray-300 text-sm mb-1">Token A</p>
             <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-4 relative">
               <div className="flex justify-between items-center">
                 <input
@@ -80,7 +81,7 @@ const AddLiquidityPage = () => {
             </div>
 
             <p className="text-gray-300 text-sm mb-1">Token B</p>
-            <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-6 relative">
+            <div className="bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4 mb-4 relative">
               <div className="flex justify-between items-center">
                 <input
                   value={amountBDesired}
@@ -89,12 +90,10 @@ const AddLiquidityPage = () => {
                   className="bg-transparent text-white text-xl outline-none w-1/2"
                 />
 
-                <div>
-                  <TokenButton
-                    token={tokenB}
-                    onClick={() => setIsTokenBSelected((p) => !p)}
-                  />
-                </div>
+                <TokenButton
+                  token={tokenB}
+                  onClick={() => setIsTokenBSelected((p) => !p)}
+                />
               </div>
 
               {isTokenBSelected && (

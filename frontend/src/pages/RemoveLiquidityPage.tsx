@@ -91,27 +91,18 @@ const RemoveLiquidityPage = () => {
               value={liquidity}
               onChange={(e) => {
                 const value = e.target.value;
-
                 if (!value) {
                   setLiquidity("");
                   return;
                 }
-
-                // block non-numbers
                 if (isNaN(Number(value))) return;
-
-                // HARD LIMIT ENFORCEMENT
                 if (Number(value) > Number(lpTokens)) {
                   setShakeInput(true);
                   setLiquidity("");
-
                   toast.error("Stay within your liquidity limit");
-
-                  // remove shake after animation
                   setTimeout(() => setShakeInput(false), 300);
                   return;
                 }
-
                 setLiquidity(value);
               }}
               className="bg-transparent text-white text-xl outline-none w-full"
@@ -143,16 +134,17 @@ const RemoveLiquidityPage = () => {
               disabled={
                 !tokenA || !tokenB || !liquidity || Number(liquidity) === 0
               }
-              className="w-full py-3 bg-[#FF4D4D] hover:bg-[#E63939] text-white font-semibold rounded-lg transition disabled:opacity-50"
+              className="w-full py-3 bg-[#FF4D4D] hover:bg-[#E63939] text-white font-semibold rounded-lg transition disabled:opacity-50 cursor-pointer"
             >
               Remove Liquidity
             </button>
           ) : (
             <button
               disabled
-              className="w-full py-3 bg-[#FF4D4D] hover:bg-[#E63939] text-white font-semibold rounded-lg transition disabled:opacity-50"
+              className="w-full flex flex-row gap-2 justify-center items-center py-3 bg-[#FF4D4D] hover:bg-[#E63939] text-white font-semibold rounded-lg transition disabled:opacity-50"
             >
-              <Loader2 /> Removing Liquidity
+              <Loader2 className="animate-spin" />
+              <p>Removing Liquidity</p>
             </button>
           )}
         </div>

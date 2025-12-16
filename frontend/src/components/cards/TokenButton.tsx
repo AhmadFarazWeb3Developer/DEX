@@ -11,7 +11,7 @@ const TokenButton = ({
 }) => (
   <div
     onClick={onClick}
-    className="cursor-pointer flex items-center gap-2 bg-[#0E3A2A] hover:bg-[#114A36] transition px-3 py-2 rounded-full"
+    className="cursor-pointer w-1/2 flex justify-center items-center gap-2 bg-[#0E3A2A] hover:bg-[#114A36] transition px-3  py-2 rounded-full"
   >
     {token ? (
       <>

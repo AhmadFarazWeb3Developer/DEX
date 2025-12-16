@@ -4,6 +4,7 @@ import { decodeError } from "./helper/decodeError";
 import useWriteInstances from "./helper/useWriteInstances";
 import useSigner from "./helper/useSiger";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const useSwapTokens = () => {
   const { writeInstances } = useWriteInstances();
@@ -42,6 +43,12 @@ const useSwapTokens = () => {
       );
 
       const receipt = await tx.wait();
+
+      if (receipt) {
+        toast.success("Tokens swapped successfully", {
+          action: { label: "Close", onClick: () => {} },
+        });
+      }
       console.log(receipt);
     } catch (error) {
       decodeError(error);
