@@ -215,7 +215,7 @@ const RemoveLiquidityPage = () => {
               className="w-full py-4 bg-[#FF4D4D] hover:bg-[#E63939] text-white 
                        font-semibold rounded-xl transition-all disabled:opacity-50 
                        disabled:cursor-not-allowed flex items-center justify-center gap-2
-                       shadow-lg hover:shadow-xl"
+                       shadow-lg  cursor-pointer hover:shadow-xl"
             >
               {isRemovingLiquidity ? (
                 <>
