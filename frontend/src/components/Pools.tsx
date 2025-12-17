@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { TOKEN_ICONS } from "../constants/tokenIcons";
-import { CopyIcon } from "lucide-react";
+import { CopyIcon, Loader2 } from "lucide-react";
 import { PoolType } from "@/types/PoolType";
 import { formatEther } from "ethers";
 import useSinglePool from "../blockchain-interaction/useSinglePool";
@@ -60,7 +60,8 @@ const Pools = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-white text-xl">
+      <div className="min-h-screen flex items-center justify-center gap-2 text-white text-xl">
+        <Loader2 className="animate-spin h-5 w-5" />
         Loading pools...
       </div>
     );
@@ -111,7 +112,7 @@ const Pools = () => {
             <tbody className="divide-y divide-gray-700/20">
               {pools.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="p-12 text-center text-gray-400">
+                  <td colSpan={6} className=" p-12 text-center  text-gray-400">
                     No pools available yet
                   </td>
                 </tr>

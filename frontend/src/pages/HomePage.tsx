@@ -5,7 +5,6 @@ import {
   Users,
   BarChart2,
   Layers,
-  ChevronDown,
   Loader2,
 } from "lucide-react";
 import SelectToken from "../components/cards/SelectToken";
@@ -34,31 +33,31 @@ const HomePage = () => {
   const { swapTokens, isSwapping } = useSwapTokens();
   const { getAmountOut, gettingAmountOutMax } = useGetAmountOut();
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     const target = event.target;
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target;
 
-  //     if (
-  //       payRef.current &&
-  //       target instanceof Node &&
-  //       !payRef.current.contains(target)
-  //     ) {
-  //       setIsPayOpen(false);
-  //     }
+      if (
+        payRef.current &&
+        target instanceof Node &&
+        !payRef.current.contains(target)
+      ) {
+        setIsPayOpen(false);
+      }
 
-  //     if (
-  //       receiveRef.current &&
-  //       target instanceof Node &&
-  //       !receiveRef.current.contains(target)
-  //     ) {
-  //       setIsReceiveOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
+      if (
+        receiveRef.current &&
+        target instanceof Node &&
+        !receiveRef.current.contains(target)
+      ) {
+        setIsReceiveOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchGetAmountOut = async () => {

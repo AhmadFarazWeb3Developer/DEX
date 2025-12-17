@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SelectToken from "../components/cards/SelectToken";
 import TokenButton from "../components/cards/TokenButton";
 import { TokenType } from "../types/TokenType";
@@ -15,8 +15,11 @@ const AddLiquidityPage = () => {
   const [tokenA, setTokenA] = useState<TokenType | null>(null);
   const [tokenB, setTokenB] = useState<TokenType | null>(null);
 
-  const [isTokenASelected, setIsTokenASelected] = useState(false);
-  const [isTokenBSelected, setIsTokenBSelected] = useState(false);
+  const tokenARef = useRef<HTMLDivElement>(null);
+  const tokenBRef = useRef<HTMLDivElement>(null);
+
+  const [isTokenAOpen, setIsTokenAOpen] = useState(false);
+  const [isTokenBOpen, setIsTokenBOpen] = useState(false);
 
   const { address, isConnected } = useAppKitAccount();
   const { addLiquidity, isAddingLiquidity } = useAddLiquidity();
@@ -44,6 +47,32 @@ const AddLiquidityPage = () => {
     );
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target;
+
+      if (
+        tokenARef.current &&
+        target instanceof Node &&
+        !tokenARef.current.contains(target)
+      ) {
+        setIsTokenAOpen(false);
+      }
+
+      if (
+        tokenBRef.current &&
+        target instanceof Node &&
+        !tokenBRef.current.contains(target)
+      ) {
+        setIsTokenBOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div className="w-full">
@@ -69,13 +98,18 @@ const AddLiquidityPage = () => {
 
                 <TokenButton
                   token={tokenA}
-                  onClick={() => setIsTokenASelected((p) => !p)}
+                  onClick={() => setIsTokenAOpen((p) => !p)}
                 />
               </div>
 
-              {isTokenASelected && (
+              {isTokenAOpen && (
                 <div className="absolute right-0 mt-3 z-50 w-full">
-                  <SelectToken setToken={setTokenA} />
+                  <SelectToken
+                    setToken={(token) => {
+                      setTokenA(token);
+                      setIsTokenAOpen(false);
+                    }}
+                  />
                 </div>
               )}
             </div>
@@ -92,13 +126,18 @@ const AddLiquidityPage = () => {
 
                 <TokenButton
                   token={tokenB}
-                  onClick={() => setIsTokenBSelected((p) => !p)}
+                  onClick={() => setIsTokenBOpen((p) => !p)}
                 />
               </div>
 
-              {isTokenBSelected && (
+              {isTokenBOpen && (
                 <div className="absolute right-0 mt-3 z-50 w-full">
-                  <SelectToken setToken={setTokenB} />
+                  <SelectToken
+                    setToken={(token) => {
+                      setTokenB(token);
+                      setIsTokenBOpen(false);
+                    }}
+                  />
                 </div>
               )}
             </div>
