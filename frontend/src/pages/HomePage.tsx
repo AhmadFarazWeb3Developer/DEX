@@ -14,6 +14,7 @@ import useSwapTokens from "../blockchain-interaction/useSwapTokens";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { toast } from "sonner";
 import TokenButton from "../components/cards/TokenButton";
+import useGetAmountOut from "../blockchain-interaction/useGetAmountOut";
 
 const HomePage = () => {
   const { address, isConnected } = useAppKitAccount();
@@ -31,6 +32,7 @@ const HomePage = () => {
   const [amountOutMin, setAmountOutMin] = useState("");
 
   const { swapTokens, isSwapping } = useSwapTokens();
+  const { getAmountOut, gettingAmountOutMax } = useGetAmountOut();
 
   // useEffect(() => {
   //   const handleClickOutside = (event: MouseEvent) => {
@@ -57,6 +59,22 @@ const HomePage = () => {
   //     document.removeEventListener("mousedown", handleClickOutside);
   //   };
   // }, []);
+
+  useEffect(() => {
+    const fetchGetAmountOut = async () => {
+      if (!tokenA || !tokenB || !amountIn) {
+        return;
+      }
+
+      const maximumAmountOut = await getAmountOut(
+        tokenA?.address,
+        tokenB?.address,
+        amountIn
+      );
+      setAmountOutMin(parseFloat(maximumAmountOut).toFixed(4));
+    };
+    fetchGetAmountOut();
+  }, [amountIn, tokenA, tokenB]);
 
   const handleSwapTokens = async () => {
     if (!address || !isConnected) {
@@ -123,8 +141,8 @@ const HomePage = () => {
                 <div className="flex justify-between items-center bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4">
                   <input
                     value={amountOutMin}
-                    onChange={(e) => setAmountOutMin(e.target.value)}
-                    placeholder="0.0"
+                    // onChange={(e) => setAmountOutMin(e.target.value)}
+                    placeholder={amountOutMin}
                     className="bg-transparent text-white text-xl outline-none w-2/3"
                   />
                   <TokenButton

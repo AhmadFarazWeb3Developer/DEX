@@ -1,7 +1,7 @@
 import { useAppKitNetwork } from "@reown/appkit/react";
 import getProvider from "./helper/getProvider";
 import abis from "./helper/abis";
-import { Contract, formatEther, parseEther, parseUnits } from "ethers";
+import { Contract, formatEther } from "ethers";
 import useReadInstances from "./helper/useReadInstances";
 
 const useSinglePool = () => {
