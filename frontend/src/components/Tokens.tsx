@@ -4,6 +4,8 @@ import { TokenType } from "../types/TokenType";
 import { TOKEN_ICONS } from "../constants/tokenIcons";
 import { formatLargeNumber } from "../lib/formateLargeNumber";
 import { formatEther } from "ethers";
+import { CopyIcon } from "lucide-react";
+import { toast } from "sonner";
 
 const Tokens = () => {
   const [tokens, setTokens] = useState<TokenType[]>([]);
@@ -19,7 +21,7 @@ const Tokens = () => {
         icon: TOKEN_ICONS[token.symbol.toLowerCase()],
       }));
       setTokens(updatedTokens);
-      setLoading(false); // stop loading
+      setLoading(false);
     };
     init();
   }, []);
@@ -66,8 +68,19 @@ const Tokens = () => {
           <p className="text-gray-300 flex-[2]">
             {formatLargeNumber(formatEther(token.totalSupply))}
           </p>
-          <p className="text-gray-300 flex-[2] truncate">
+
+          <p className="text-gray-300 flex-[2] flex flex-row items-center gap-2 truncate">
             {`${token.address.slice(0, 6)}...${token.address.slice(-4)}`}
+            <CopyIcon
+              size={16}
+              className=" cursor-pointer text-gray-400"
+              onClick={() => {
+                navigator.clipboard.writeText(token.address);
+                toast.success(`${token.address} Copied!`, {
+                  action: { label: "Close", onClick: () => {} },
+                });
+              }}
+            />
           </p>
         </div>
       ))}

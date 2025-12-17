@@ -7,6 +7,7 @@ import useSinglePool from "../blockchain-interaction/useSinglePool";
 import useAllPools from "../blockchain-interaction/useAllPools";
 import { calculateTVL } from "../lib/calculateTVL";
 import { formatLargeNumber } from "../lib/formateLargeNumber";
+import { toast } from "sonner";
 
 const Pools = () => {
   const [pools, setPools] = useState<PoolType[]>([]);
@@ -91,7 +92,7 @@ const Pools = () => {
           <div className="bg-[#12291a] rounded-2xl p-6 hover:bg-[#0B1E13] transition-all">
             <div className="text-gray-400 text-sm mb-1">Total TVL</div>
             <div className="text-white text-3xl font-bold">
-              ${formatLargeNumber(totalTVL)}
+              ${parseFloat(formatLargeNumber(totalTVL)).toFixed(4)}
             </div>
           </div>
         </div>
@@ -179,10 +180,14 @@ const Pools = () => {
                         {truncateAddress(attribute.pairAddress)}
                       </code>
                       <CopyIcon
-                        onClick={() =>
-                          navigator.clipboard.writeText(attribute.pairAddress)
-                        }
-                        className="text-gray-500 w-4 h-4 cursor-pointer hover:text-gray-300"
+                        size={16}
+                        className=" cursor-pointer text-gray-400"
+                        onClick={() => {
+                          navigator.clipboard.writeText(attribute.pairAddress);
+                          toast.success(`${attribute.pairAddress} Copied!`, {
+                            action: { label: "Close", onClick: () => {} },
+                          });
+                        }}
                       />
                     </td>
                   </tr>

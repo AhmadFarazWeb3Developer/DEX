@@ -23,9 +23,9 @@ const ExplorePoolsPage = () => {
                 setTokens(true);
                 setPool(false);
               }}
-              className={`text-white px-4 py-2 rounded-lg transition ${
+              className={`text-white px-4 py-2 rounded-lg transition cursor-pointer ${
                 isTokensSet
-                  ? "bg-[#133022] hover:bg-[#0F261A]"
+                  ? "bg-[#133022] hover:bg-[#0F261A] font-semibold"
                   : "hover:bg-[#133022]"
               }`}
             >
@@ -36,9 +36,9 @@ const ExplorePoolsPage = () => {
                 setPool(true);
                 setTokens(false);
               }}
-              className={`text-white px-4 py-2 rounded-lg transition ${
+              className={`text-white px-4 py-2 rounded-lg transition cursor-pointer ${
                 isPoolSet
-                  ? "bg-[#133022] hover:bg-[#0F261A]"
+                  ? "bg-[#133022] hover:bg-[#0F261A] font-semibold"
                   : "hover:bg-[#133022]"
               }`}
             >
@@ -49,7 +49,7 @@ const ExplorePoolsPage = () => {
           <div className="flex flex-row gap-4 items-center">
             <button
               onClick={() => navigate("/explore-pools/add-liquidity")}
-              className="bg-[#00C084] text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#00a870] transition"
+              className="bg-[#00C084] text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#00a870] transition cursor-pointer"
             >
               Add Liquidity
             </button>
@@ -60,7 +60,7 @@ const ExplorePoolsPage = () => {
                 placeholder="Search Pools"
                 className="bg-transparent text-white outline-none placeholder-gray-400"
               />
-              <Search />
+              <Search strokeWidth={1.5} size={20} className=" text-gray-400" />
             </div>
           </div>
         </div>

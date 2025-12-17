@@ -6,6 +6,7 @@ import {
   BarChart2,
   Layers,
   Loader2,
+  Dot,
 } from "lucide-react";
 import SelectToken from "../components/cards/SelectToken";
 import { TokenType } from "../types/TokenType";
@@ -138,12 +139,10 @@ const HomePage = () => {
               <p className="text-gray-300 text-sm mb-2">You Receive</p>
               <div className="relative w-full">
                 <div className="flex justify-between items-center bg-[#0B1E13] border border-[#1f3528] rounded-lg p-4">
-                  <input
-                    value={amountOutMin}
-                    // onChange={(e) => setAmountOutMin(e.target.value)}
-                    placeholder={amountOutMin}
-                    className="bg-transparent text-white text-xl outline-none w-2/3"
-                  />
+                  <div className="bg-transparent text-white text-xl outline-none w-2/3">
+                    {amountOutMin}
+                  </div>
+
                   <TokenButton
                     token={tokenB}
                     onClick={() => setIsReceiveOpen((p) => !p)}
