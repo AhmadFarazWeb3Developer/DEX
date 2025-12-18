@@ -1,5 +1,5 @@
 import { Contract, parseUnits } from "ethers";
-import addressToAbiMap from "./helper/addressToAbiMap";
+import { getAddressToAbiMap } from "./helper/addressToAbiMap";
 import { decodeError } from "./helper/decodeError";
 import useWriteInstances from "./helper/useWriteInstances";
 import useSigner from "./helper/useSiger";
@@ -25,7 +25,7 @@ const useSwapTokens = () => {
       const result = await getSigner();
       if (!result) return;
 
-      const tokenA_Abi = addressToAbiMap[path[0]];
+      const tokenA_Abi = getAddressToAbiMap(path[0]);
 
       const tokenA = new Contract(path[0], tokenA_Abi, result.signer);
 

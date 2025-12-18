@@ -6,7 +6,6 @@ import {
   BarChart2,
   Layers,
   Loader2,
-  Dot,
 } from "lucide-react";
 import SelectToken from "../components/cards/SelectToken";
 import { TokenType } from "../types/TokenType";

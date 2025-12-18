@@ -1,10 +1,10 @@
 require("@nomicfoundation/hardhat-toolbox");
 
-require("dotenv").config({ path: "../frontend" });
+require("dotenv").config();
 
 module.exports = {
-  defaultNetwork: "hardhat",
-  // defaultNetwork: "polygon_amoy",
+  // defaultNetwork: "hardhat",
+  defaultNetwork: "polygon_amoy",
   // defaultNetwork: "bsc_testnet",
   // defaultNetwork: "arbitrum_sepolia",
   // defaultNetwork: "avalanche_fuji",
@@ -27,34 +27,34 @@ module.exports = {
       },
     },
 
-    // polygon_amoy: {
-    //   url: "https://rpc-amoy.polygon.technology",
-    //   accounts: [process.env.PRIVATE_KEY],
-    //   chainId: 80002,
-    // },
+    polygon_amoy: {
+      url: "https://rpc-amoy.polygon.technology",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 80002,
+    },
 
-    // bsc_testnet: {
-    //   url: `https://bnb-testnet.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
-    //   accounts: [process.env.PRIVATE_KEY],
-    //   chainId: 97,
-    // },
+    bsc_testnet: {
+      url: `https://bnb-testnet.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 97,
+    },
 
-    // arbitrum_sepolia: {
-    //   url: `https://arb-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
-    //   accounts: [process.env.PRIVATE_KEY],
-    //   chainId: 421614,
-    // },
+    arbitrum_sepolia: {
+      url: `https://arb-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 421614,
+    },
 
-    // avalanche_fuji: {
-    //   url: `https://avax-fuji.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
-    //   accounts: [process.env.PRIVATE_KEY],
-    //   chainId: 43113,
-    // },
-    // optimism_sepolia: {
-    //   url: `https://opt-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
-    //   accounts: [process.env.PRIVATE_KEY],
-    //   chainId: 11155420,
-    // },
+    avalanche_fuji: {
+      url: `https://avax-fuji.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 43113,
+    },
+    optimism_sepolia: {
+      url: `https://opt-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 11155420,
+    },
   },
 
   solidity: {
@@ -84,7 +84,7 @@ module.exports = {
 };
 
 // -------- deployment script ----------
-// npx hardhat run  scripts/deployContracts.js --network localhost
+// npx hardhat run  scripts/deployContracts.js --network polygon_amoy
 
 // -------- tokens miniting script -------
 // npx hardhat run scripts/mintTokens.js --network localhost

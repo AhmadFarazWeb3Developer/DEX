@@ -1,19 +1,29 @@
-import ContractsAddresses from "../../../../onchain-protocol/deployment/ContractsAddresses.json";
+import Deployments from "../../../../onchain-protocol/deployment/ContractsAddresses.json";
 
-const addresses = {
-  UniswapV2FactoryAddress: ContractsAddresses.UniswapV2FactoryAddress,
-  UniswapV2ERC20Address: ContractsAddresses.UniswapV2ERC20Address,
-  UniswapV2Router02MockAddress: ContractsAddresses.UniswapV2Router02MockAddress,
+type ChainDeployments = Record<number, any>;
 
-  DaiAddress: ContractsAddresses.DaiAddress,
-  UsdtAddress: ContractsAddresses.UsdtAddress,
-  WethAddress: ContractsAddresses.WethAddress,
-  BnbAddress: ContractsAddresses.BnbAddress,
-  AvalancheAddress: ContractsAddresses.AvalancheAddress,
-  ChainlinkAddress: ContractsAddresses.ChainlinkAddress,
-  PolkadotAddress: ContractsAddresses.PolkadotAddress,
-  UsdcAddress: ContractsAddresses.UsdcAddress,
-  PolygonAddress: ContractsAddresses.PolygonAddress,
+const deployments = Deployments as ChainDeployments;
+
+export const getAddressesByChainId = (chainId: number) => {
+  const addresses = deployments[chainId];
+
+  if (!addresses) {
+    throw new Error(`Unsupported chainId: ${chainId}`);
+  }
+
+  return {
+    UniswapV2FactoryAddress: addresses.UniswapV2Factory,
+    UniswapV2ERC20Address: addresses.UniswapV2ERC20,
+    UniswapV2Router02MockAddress: addresses.UniswapV2Router02Mock,
+
+    DaiAddress: addresses.Dai,
+    UsdtAddress: addresses.Usdt,
+    WethAddress: addresses.Weth,
+    BnbAddress: addresses.Bnb,
+    AvalancheAddress: addresses.Avalanche,
+    ChainlinkAddress: addresses.Chainlink,
+    PolkadotAddress: addresses.Polkadot,
+    UsdcAddress: addresses.Usdc,
+    PolygonAddress: addresses.Polygon,
+  };
 };
-
-export default addresses;

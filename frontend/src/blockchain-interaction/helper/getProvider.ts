@@ -1,6 +1,8 @@
 import { JsonRpcProvider } from "ethers";
 
 const getProvider = async (chainId: number) => {
+  console.log("chain id: ", chainId);
+
   const getLocalRpcUrl = () => {
     return "http://127.0.0.1:8545";
   };

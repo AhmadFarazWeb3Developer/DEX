@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { Eip1193Provider, ethers } from "ethers";
 import { Wallet, ChevronDown } from "lucide-react";
 
 import {
@@ -38,6 +38,9 @@ const ConnectButton = () => {
     ) {
       close();
     }
+
+    if (!chainId) return;
+
     setPreviousChainId(chainId);
   }, [chainId, isModalOpen, close, previousChainId]);
 
@@ -52,7 +55,12 @@ const ConnectButton = () => {
     const fetchBalance = async () => {
       if (isConnected && address && walletProvider) {
         try {
-          const provider = new ethers.BrowserProvider(walletProvider);
+          const provider = new ethers.BrowserProvider(
+            walletProvider as Eip1193Provider
+          );
+
+          console.log("provider : ", provider);
+
           const balanceWei = await provider.getBalance(address);
           const balanceEth = ethers.formatEther(balanceWei);
           setBalance(parseFloat(balanceEth).toFixed(4));
@@ -73,7 +81,11 @@ const ConnectButton = () => {
 
   const getNetworkImageUrl = () => {
     if (!chainId) return null;
-    const chainName = getChainName(chainId);
+
+    const numericChainId =
+      typeof chainId === "string" ? parseInt(chainId) : chainId;
+
+    const chainName = getChainName(numericChainId);
 
     if (chainName) {
       return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/${chainName}/info/logo.png`;
@@ -131,19 +143,16 @@ const ConnectButton = () => {
                   </div>
                 )}
 
-                <span className="text-sm   hover:text-black text-white/80 group-hover:text-white transition-colors ">
+                <span className="text-sm    text-white/80 group-hover:text-white transition-colors ">
                   {caipNetwork.name}
                 </span>
-                <ChevronDown
-                  size={14}
-                  className="text-white/60  hover:text-black"
-                />
+                <ChevronDown size={14} className="text-white/60  " />
               </button>
             )}
 
             <button
               onClick={() => open({ view: "Account" })}
-              className="flex items-center gap-2 px-5 py-2.5 hover:bg-action-btn-green hover:text-black rounded-full font-normal text-white/70 transition-all hover:scale-105 shadow-2xl cursor-pointer"
+              className="flex items-center gap-2 px-5 py-2.5 hover:bg-action-btn-green rounded-full font-normal text-white/70 transition-all hover:scale-105 shadow-2xl cursor-pointer"
             >
               <span className="text-sm">
                 {`${address?.slice(0, 6)}...${address?.slice(-4)}`}

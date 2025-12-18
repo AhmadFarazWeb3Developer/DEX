@@ -1,14 +1,19 @@
-import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import hre from "hardhat";
 
-const { ethers } = hre;
+const { ethers, network } = hre;
 
 const deployContract = async () => {
   try {
+    const chainId = network.config.chainId;
+    const networkName = network.name;
+
+    console.log(`Deploying to ${networkName} (${chainId})`);
+
     const UniswapV2Factory = await ethers.getContractFactory(
       "UniswapV2Factory"
     );
-    // const UniswapV2Pair = await ethers.getContractFactory("UniswapV2Pair");
+
     const UniswapV2ERC20 = await ethers.getContractFactory("UniswapV2ERC20");
 
     const UniswapV2Router02Mock = await ethers.getContractFactory(
@@ -82,18 +87,25 @@ const deployContract = async () => {
       BnbAddress: bnb.target,
       PolygonAddress: polygon.target,
     };
-
     const deploymentFolder = "./deployment";
+    const filePath = `${deploymentFolder}/ContractsAddresses.json`;
 
     if (!existsSync(deploymentFolder)) {
       mkdirSync(deploymentFolder, { recursive: true });
-      console.log(`Created folder: ${deploymentFolder}`);
     }
 
-    writeFileSync(
-      `${deploymentFolder}/ContractsAddresses.json`,
-      JSON.stringify(deployed, null, 2)
-    );
+    let allDeployments = {};
+    if (existsSync(filePath)) {
+      allDeployments = JSON.parse(readFileSync(filePath, "utf-8"));
+    }
+
+    // Store under chainId
+    allDeployments[chainId] = {
+      network: networkName,
+      ...deployed,
+    };
+
+    writeFileSync(filePath, JSON.stringify(allDeployments, null, 2));
 
     console.log("Contracts deployed and addresses saved:", deployed);
   } catch (error) {

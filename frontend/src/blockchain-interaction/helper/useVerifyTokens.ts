@@ -1,4 +1,4 @@
-import addressToAbiMap from "./addressToAbiMap";
+import { getAddressToAbiMap } from "./addressToAbiMap";
 import { useAppKitNetwork } from "@reown/appkit/react";
 import getProvider from "./getProvider";
 import { Contract } from "ethers";
@@ -14,7 +14,7 @@ const useVerifyTokens = () => {
 
     const provider = await getProvider(numericChainId);
 
-    const abi = addressToAbiMap[tokenAddress];
+    const abi = getAddressToAbiMap(tokenAddress);
 
     if (!abi) toast.error("Token Does not Exists");
     const instance = new Contract(tokenAddress, abi, provider);

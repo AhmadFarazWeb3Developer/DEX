@@ -3,7 +3,7 @@ import { Contract } from "ethers";
 import { useAppKitNetwork } from "@reown/appkit/react";
 
 import abis from "./abis";
-import addresses from "./addresses";
+import { getAddressesByChainId } from "./addresses";
 import useSigner from "./useSiger";
 
 const useWriteInstances = () => {
@@ -27,22 +27,6 @@ const useWriteInstances = () => {
     PolygonMockAbi,
   } = abis;
 
-  const {
-    UniswapV2FactoryAddress,
-    UniswapV2ERC20Address,
-    UniswapV2Router02MockAddress,
-
-    DaiAddress,
-    UsdtAddress,
-    WethAddress,
-    BnbAddress,
-    AvalancheAddress,
-    ChainlinkAddress,
-    PolkadotAddress,
-    UsdcAddress,
-    PolygonAddress,
-  } = addresses;
-
   const writeInstances = async () => {
     if (!chainId) return;
 
@@ -50,6 +34,22 @@ const useWriteInstances = () => {
       typeof chainId === "string" ? parseInt(chainId) : chainId;
 
     const { signer } = await getSigner();
+
+    const {
+      UniswapV2FactoryAddress,
+      UniswapV2ERC20Address,
+      UniswapV2Router02MockAddress,
+
+      DaiAddress,
+      UsdtAddress,
+      WethAddress,
+      BnbAddress,
+      AvalancheAddress,
+      ChainlinkAddress,
+      PolkadotAddress,
+      UsdcAddress,
+      PolygonAddress,
+    } = getAddressesByChainId(numericChainId);
 
     // FACTORY & ROUTER
     const uniswapV2FactoryInstance = new Contract(

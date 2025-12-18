@@ -4,7 +4,7 @@ import { useAppKitNetwork } from "@reown/appkit/react";
 import getProvider from "./getProvider";
 
 import abis from "./abis";
-import addresses from "./addresses";
+import { getAddressesByChainId } from "./addresses";
 
 const useReadInstances = () => {
   const { chainId } = useAppKitNetwork();
@@ -25,21 +25,6 @@ const useReadInstances = () => {
     PolygonMockAbi,
   } = abis;
 
-  const {
-    UniswapV2FactoryAddress,
-    UniswapV2ERC20Address,
-    UniswapV2Router02MockAddress,
-    DaiAddress,
-    UsdtAddress,
-    WethAddress,
-    BnbAddress,
-    AvalancheAddress,
-    ChainlinkAddress,
-    PolkadotAddress,
-    UsdcAddress,
-    PolygonAddress,
-  } = addresses;
-
   const readInstances = async () => {
     if (!chainId) return;
 
@@ -47,12 +32,30 @@ const useReadInstances = () => {
       typeof chainId === "string" ? parseInt(chainId) : chainId;
     const provider = await getProvider(numericChainId);
 
+    console.log("provider : ", provider);
+
+    const {
+      UniswapV2FactoryAddress,
+      UniswapV2ERC20Address,
+      UniswapV2Router02MockAddress,
+      DaiAddress,
+      UsdtAddress,
+      WethAddress,
+      BnbAddress,
+      AvalancheAddress,
+      ChainlinkAddress,
+      PolkadotAddress,
+      UsdcAddress,
+      PolygonAddress,
+    } = getAddressesByChainId(numericChainId);
+
     // FACTORY & ROUTER
     const uniswapV2FactoryInstance = new Contract(
       UniswapV2FactoryAddress,
       UniswapV2FactoryAbi,
       provider
     );
+
     const uniswapV2ERC20Instance = new Contract(
       UniswapV2ERC20Address,
       UniswapV2ERC20Abi,
