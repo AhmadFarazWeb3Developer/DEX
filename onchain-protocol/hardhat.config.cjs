@@ -83,10 +83,8 @@ module.exports = {
   },
 };
 
-// npx hardhat ignition deploy ./ignition/modules/NFTsMarketplaceFactory.js  --network localhost
-// npx hardhat ignition deploy ./ignition/modules/NFTsMarketplaceFactory.js --network polygon_amoy
-// npx hardhat ignition deploy ./ignition/modules/NFTsMarketplaceFactory.js --network bsc_testnet
-// npx hardhat ignition deploy ./ignition/modules/NFTsMarketplaceFactory.js --network arbitrum_sepolia
-// npx hardhat ignition deploy ./ignition/modules/NFTsMarketplaceFactory.js --network avalanche_fuji
+// -------- deployment script ----------
+// npx hardhat run  scripts/deployContracts.js --network localhost
 
-// npx hardhat verify --network  avalanche_fuji 0xa717002347fb5d897038aD347c8c25a1fB414f22
+// -------- tokens miniting script -------
+// npx hardhat run scripts/mintTokens.js --network localhost
