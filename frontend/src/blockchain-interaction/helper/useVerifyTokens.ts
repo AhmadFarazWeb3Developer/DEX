@@ -9,20 +9,33 @@ const useVerifyTokens = () => {
 
   const verifyTokens = async (tokenAddress: string) => {
     if (!chainId) return;
+
     const numericChainId =
       typeof chainId === "string" ? parseInt(chainId) : chainId;
 
     const provider = await getProvider(numericChainId);
 
-    const abi = getAddressToAbiMap(tokenAddress);
+    console.log(tokenAddress);
 
-    if (!abi) toast.error("Token Does not Exists");
+    const abiMap = getAddressToAbiMap(numericChainId);
+    console.log(abiMap);
+    const abi = abiMap[tokenAddress];
+
+    if (!abi) {
+      toast.error("Token does not exist on this network", {
+        action: { label: "Close", onClick: () => {} },
+      });
+      return;
+    }
+
     const instance = new Contract(tokenAddress, abi, provider);
-    const tokenName: string = await instance.symbol();
+
+    const tokenName = await instance.symbol();
 
     return { tokenName };
   };
 
   return { verifyTokens };
 };
+
 export default useVerifyTokens;

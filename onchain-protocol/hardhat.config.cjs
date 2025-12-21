@@ -34,24 +34,24 @@ module.exports = {
     },
 
     bsc_testnet: {
-      url: `https://bnb-testnet.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+      url: `https://bnb-testnet.g.alchemy.com/v2/${process.env.ALCHEMY_RPC_API_KEY}`,
       accounts: [process.env.PRIVATE_KEY],
       chainId: 97,
     },
 
     arbitrum_sepolia: {
-      url: `https://arb-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+      url: `https://arb-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_RPC_API_KEY}`,
       accounts: [process.env.PRIVATE_KEY],
       chainId: 421614,
     },
 
     avalanche_fuji: {
-      url: `https://avax-fuji.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+      url: `https://avax-fuji.g.alchemy.com/v2/${process.env.ALCHEMY_RPC_API_KEY}`,
       accounts: [process.env.PRIVATE_KEY],
       chainId: 43113,
     },
     optimism_sepolia: {
-      url: `https://opt-sepolia.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_RPC_API_KEY}`,
+      url: `https://opt-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_RPC_API_KEY}`,
       accounts: [process.env.PRIVATE_KEY],
       chainId: 11155420,
     },
@@ -85,6 +85,9 @@ module.exports = {
 
 // -------- deployment script ----------
 // npx hardhat run  scripts/deployContracts.js --network polygon_amoy
+// npx hardhat run  scripts/deployContracts.js --network bsc_testnet
+// npx hardhat run  scripts/deployContracts.js --network avalanche_fuji
+// npx hardhat run  scripts/deployContracts.js --network arbitrum_sepolia
 
 // -------- tokens miniting script -------
 // npx hardhat run scripts/mintTokens.js --network localhost

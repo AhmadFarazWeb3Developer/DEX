@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useTokens from "../blockchain-interaction/helper/useTokens";
 import { TokenType } from "../types/TokenType";
 import { TOKEN_ICONS } from "../constants/tokenIcons";
 import { formatLargeNumber } from "../lib/formateLargeNumber";
 import { formatEther } from "ethers";
-import { CopyIcon } from "lucide-react";
+import { CopyIcon, Loader2, Search } from "lucide-react";
 import { toast } from "sonner";
 
 const Tokens = () => {
   const [tokens, setTokens] = useState<TokenType[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [searchValue, setSearchValue] = useState("");
+  const [searchedTokens, setSearchedTokens] = useState<TokenType[]>([]);
+
   const { allTokens } = useTokens();
 
   useEffect(() => {
@@ -26,16 +30,41 @@ const Tokens = () => {
     init();
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    // setSearchedTokens(allTokens.filter((token) => token.name.includes(value)));
+    // setSearchedTokens(value);
+
+    setSearchValue(value);
+
+    console.log("Input value:", value);
+  };
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[200px] text-white text-lg">
-        Loading tokens...
+      <div className="min-h-screen flex items-center justify-center gap-2 text-white text-xl">
+        <Loader2 className="animate-spin h-5 w-5" />
+        Loading pools...
       </div>
     );
   }
 
   return (
     <div className="flex flex-col w-full space-y-2">
+      <div className=" w-full  flex flex-row items-center justify-end">
+        <div className="flex flex-row  w-1/2 items-center bg-[#0F2A1D] border border-[#1f3528] rounded-lg px-3 py-1 border-1">
+          <input
+            type="text"
+            value={searchValue}
+            onChange={handleInputChange}
+            placeholder="Search Tokens"
+            className="bg-transparent text-white outline-none w-full placeholder-gray-400"
+          />
+          <Search strokeWidth={1.5} size={20} className=" text-gray-400" />
+        </div>
+      </div>
+
       <div className="flex px-4 py-3 text-gray-400 text-sm font-medium border-b border-[#1f3528]">
         <p className="flex-[0.5]">#</p>
         <p className="flex-[2]">Token</p>

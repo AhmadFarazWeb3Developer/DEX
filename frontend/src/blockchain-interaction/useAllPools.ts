@@ -8,6 +8,8 @@ const useAllPools = () => {
       );
 
       const pairs: [] = await response.json();
+      console.log(pairs);
+
       if (!pairs) {
         return undefined;
       }

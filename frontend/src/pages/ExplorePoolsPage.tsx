@@ -1,16 +1,19 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Pools from "../components/Pools";
 import Tokens from "../components/Tokens";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { TokenType } from "@/types/TokenType";
 
 const ExplorePoolsPage = () => {
   const [isPoolSet, setPool] = useState(true);
   const [isTokensSet, setTokens] = useState(false);
-
+  const [seachedTokens, setSearchedTokens] = useState<TokenType[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {}, [seachedTokens]);
   return (
     <div className=" w-full">
       <Navbar />
@@ -45,24 +48,12 @@ const ExplorePoolsPage = () => {
               Pools
             </button>
           </div>
-
-          <div className="flex flex-row gap-4 items-center">
-            <button
-              onClick={() => navigate("/explore-pools/add-liquidity")}
-              className="bg-[#00C084] text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#00a870] transition cursor-pointer"
-            >
-              Add Liquidity
-            </button>
-
-            <div className="flex flex-row items-center bg-[#0F2A1D] border border-[#1f3528] rounded-lg px-3 py-1">
-              <input
-                type="text"
-                placeholder="Search Pools"
-                className="bg-transparent text-white outline-none placeholder-gray-400"
-              />
-              <Search strokeWidth={1.5} size={20} className=" text-gray-400" />
-            </div>
-          </div>
+          <button
+            onClick={() => navigate("/explore-pools/add-liquidity")}
+            className="bg-[#00C084] text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#00a870] transition cursor-pointer"
+          >
+            Add Liquidity
+          </button>
         </div>
         {isPoolSet && <Pools />}
         {isTokensSet && <Tokens />}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { TOKEN_ICONS } from "../constants/tokenIcons";
-import { CopyIcon, Loader2 } from "lucide-react";
+import { CopyIcon, Loader2, Search } from "lucide-react";
 import { PoolType } from "@/types/PoolType";
 import { formatEther } from "ethers";
 import useSinglePool from "../blockchain-interaction/useSinglePool";
@@ -8,7 +8,7 @@ import useAllPools from "../blockchain-interaction/useAllPools";
 import { calculateTVL } from "../lib/calculateTVL";
 import { formatLargeNumber } from "../lib/formateLargeNumber";
 import { toast } from "sonner";
-
+import { useNavigate } from "react-router-dom";
 const Pools = () => {
   const [pools, setPools] = useState<PoolType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -71,13 +71,23 @@ const Pools = () => {
   return (
     <div className="min-h-screen bg-[#0b1e13] p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-1">
-            Liquidity Pools
-          </h1>
-          <p className="text-gray-400 text-sm">
-            Explore and manage your liquidity positions
-          </p>
+        <div className="mb-8 flex flex-row items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-1">
+              Liquidity Pools
+            </h1>
+            <p className="text-gray-400 text-sm">
+              Explore and manage your liquidity positions
+            </p>
+          </div>
+          <div className="flex flex-row  w-1/2 items-center bg-[#0F2A1D] border border-[#1f3528] rounded-lg px-3 py-1">
+            <input
+              type="text"
+              placeholder="Search Pools"
+              className="bg-transparent text-white outline-none w-full placeholder-gray-400"
+            />
+            <Search strokeWidth={1.5} size={20} className=" text-gray-400" />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">

@@ -1,4 +1,19 @@
 {
+  "43113": {
+    "network": "avalanche_fuji",
+    "UniswapV2FactoryAddress": "0x6757f8e57D8fB66788cB4F55938773FD33fB9d84",
+    "UniswapV2Router02MockAddress": "0x2944D7AbA60a2EEab6C3005067c0502B0567D159",
+    "UniswapV2ERC20Address": "0xee5AEf91B554C970E01Fa4f65fc1E802A0F34f2F",
+    "DaiAddress": "0x69B180746398e63f2C91962c688864E949ffb97E",
+    "UsdtAddress": "0xEAE5012A132f6C5F737E8360d0C9673b0151081d",
+    "WethAddress": "0xC39b55decE6fad5067bD3978F164f78B381aF1e1",
+    "AvalancheAddress": "0x1D2BDFb97a4159c33f9FB222e59d5E77Fc897B06",
+    "UsdcAddress": "0x1C65F36A690F18f151ed8929F9dd1cF39CbdAB61",
+    "ChainlinkAddress": "0x100caf2AFe7F9381169457089545Ac08223bFBD9",
+    "PolkadotAddress": "0xF414961825013212F6F9583D1Da050C808C58244",
+    "BnbAddress": "0x83028d37902f41dfB65904A3652476e014E9f01F",
+    "PolygonAddress": "0x80b9A5F7c6b9ecC9F8D6d897e0a448D9D177dE06"
+  },
   "80002": {
     "network": "polygon_amoy",
     "UniswapV2FactoryAddress": "0x8AA602C8F8328dE477Aa51b44119477B3b5FceB4",
@@ -13,5 +28,20 @@
     "PolkadotAddress": "0xF00DA763738fA3B2B0869e39dA9c05E043637b9e",
     "BnbAddress": "0xeAaA8ABE63d6914Ca8Da3505056488EBCeE3F2e2",
     "PolygonAddress": "0x72Da4Bb9d3D54E3E006797c3D2fBb6a52A196c3d"
+  },
+  "421614": {
+    "network": "arbitrum_sepolia",
+    "UniswapV2FactoryAddress": "0x1D2BDFb97a4159c33f9FB222e59d5E77Fc897B06",
+    "UniswapV2Router02MockAddress": "0x83028d37902f41dfB65904A3652476e014E9f01F",
+    "UniswapV2ERC20Address": "0x100caf2AFe7F9381169457089545Ac08223bFBD9",
+    "DaiAddress": "0xa717002347fb5d897038aD347c8c25a1fB414f22",
+    "UsdtAddress": "0x8Ff15cC4f9D614977e7dC2d51eE68B0621D434EF",
+    "WethAddress": "0xF5CaB0B0AB13D418F52C32f18793249FA5a6ed27",
+    "AvalancheAddress": "0xf9B460371F9fbf61fc7Fa110DfD8D6694e8D2318",
+    "UsdcAddress": "0xEAE5012A132f6C5F737E8360d0C9673b0151081d",
+    "ChainlinkAddress": "0x460815F621C1CE8b2aDC8Db3f4042Bb564210E6A",
+    "PolkadotAddress": "0x69B180746398e63f2C91962c688864E949ffb97E",
+    "BnbAddress": "0x9Ac217C96a351d42Ca143e208F810cf0691B61A0",
+    "PolygonAddress": "0xC39b55decE6fad5067bD3978F164f78B381aF1e1"
   }
 }

@@ -5,11 +5,14 @@ import useWriteInstances from "./helper/useWriteInstances";
 import useSigner from "./helper/useSiger";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useAppKitNetwork } from "@reown/appkit/react";
 
 const useSwapTokens = () => {
   const { writeInstances } = useWriteInstances();
   const [isSwapping, setIsSwapping] = useState(false);
   const { getSigner } = useSigner();
+  const { chainId } = useAppKitNetwork();
+
   const swapTokens = async (
     amountIn: string,
     amountOutMin: string,
@@ -25,7 +28,14 @@ const useSwapTokens = () => {
       const result = await getSigner();
       if (!result) return;
 
-      const tokenA_Abi = getAddressToAbiMap(path[0]);
+      if (!chainId) return;
+
+      const numericChainId =
+        typeof chainId === "string" ? parseInt(chainId) : chainId;
+
+      const abiMap = getAddressToAbiMap(numericChainId);
+
+      const tokenA_Abi = abiMap[path[0]];
 
       const tokenA = new Contract(path[0], tokenA_Abi, result.signer);
 

@@ -32,8 +32,6 @@ const useReadInstances = () => {
       typeof chainId === "string" ? parseInt(chainId) : chainId;
     const provider = await getProvider(numericChainId);
 
-    console.log("provider : ", provider);
-
     const {
       UniswapV2FactoryAddress,
       UniswapV2ERC20Address,
