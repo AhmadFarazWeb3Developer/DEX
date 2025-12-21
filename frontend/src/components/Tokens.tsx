@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import useTokens from "../blockchain-interaction/helper/useTokens";
 import { TokenType } from "../types/TokenType";
 import { TOKEN_ICONS } from "../constants/tokenIcons";
@@ -9,10 +9,10 @@ import { toast } from "sonner";
 
 const Tokens = () => {
   const [loading, setLoading] = useState(true);
-
-  const [searchValue, setSearchValue] = useState("");
   const [allTokensList, setAllTokensList] = useState<TokenType[]>([]);
   const [searchedTokens, setSearchedTokens] = useState<TokenType[]>([]);
+  const [searchValue, setSearchValue] = useState("");
+
   const { allTokens } = useTokens();
 
   useEffect(() => {
@@ -33,7 +33,6 @@ const Tokens = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-
     const filtered = allTokensList.filter(
       (token) =>
         token.name.toLowerCase().includes(value.toLowerCase()) ||
@@ -43,7 +42,6 @@ const Tokens = () => {
 
     setSearchValue(value);
     setSearchedTokens(filtered);
-    console.log("Input value:", value);
   };
 
   if (loading) {

@@ -5,17 +5,19 @@ import { toast } from "sonner";
 import useVerifyTokens from "../blockchain-interaction/helper/useVerifyTokens";
 import { TOKEN_ICONS } from "../constants/tokenIcons";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const CreatePoolPage = () => {
   const [tokenAAddress, setTokenAAddress] = useState("");
   const [tokenBAddress, setTokenBAddress] = useState("");
   const [tokenASymbol, setTokenASymbol] = useState("");
   const [tokenBSymbol, setTokenBSymbol] = useState("");
-
   const [tokenIcon, setTokenIcon] = useState({
     tokenAIcon: "",
     tokenBIcon: "",
   });
+
+  const navigate = useNavigate();
 
   const { createPair, isCreatingPair } = useCreatePair();
   const { verifyTokens } = useVerifyTokens();
@@ -39,6 +41,8 @@ const CreatePoolPage = () => {
     );
     if (bool === true) setTokenAAddress("");
     if (bool === true) setTokenBAddress("");
+
+    navigate("/explore-pools");
   };
 
   useEffect(() => {

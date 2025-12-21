@@ -8,9 +8,11 @@ import useAllPools from "../blockchain-interaction/useAllPools";
 import { calculateTVL } from "../lib/calculateTVL";
 import { formatLargeNumber } from "../lib/formateLargeNumber";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+
 const Pools = () => {
   const [pools, setPools] = useState<PoolType[]>([]);
+  const [searchedPools, setSearchedPools] = useState<PoolType[]>([]);
+  const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
 
   const { allPools } = useAllPools();
@@ -50,11 +52,27 @@ const Pools = () => {
 
       setTotalTVL(totalTvl);
       setPools(formattedPools);
+      setSearchedPools(formattedPools);
+
       setLoading(false);
     };
 
     fetchPoolsAndReserves();
   }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const filterd = pools.filter(
+      (pool) =>
+        pool.pairAddress.toLowerCase().includes(value.toLowerCase()) ||
+        pool.pair.some((pair) =>
+          pair.toLowerCase().includes(value.toLowerCase())
+        )
+    );
+
+    setSearchedPools(filterd);
+    setSearchValue(value);
+  };
 
   const truncateAddress = (address: string) =>
     `${address.slice(0, 6)}...${address.slice(-4)}`;
@@ -83,6 +101,8 @@ const Pools = () => {
           <div className="flex flex-row  w-1/2 items-center bg-[#0F2A1D] border border-[#1f3528] rounded-lg px-3 py-1">
             <input
               type="text"
+              value={searchValue}
+              onChange={handleInputChange}
               placeholder="Search Pools"
               className="bg-transparent text-white outline-none w-full placeholder-gray-400"
             />
@@ -121,14 +141,14 @@ const Pools = () => {
             </thead>
 
             <tbody className="divide-y divide-gray-700/20">
-              {pools.length === 0 ? (
+              {searchedPools.length === 0 ? (
                 <tr>
                   <td colSpan={6} className=" p-12 text-center  text-gray-400">
                     No pools available yet
                   </td>
                 </tr>
               ) : (
-                pools.map((attribute, index) => (
+                searchedPools.map((attribute, index) => (
                   <tr
                     key={index}
                     className="hover:bg-[#0A1A0F] transition-all duration-200"

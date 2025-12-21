@@ -1,19 +1,15 @@
-import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Pools from "../components/Pools";
 import Tokens from "../components/Tokens";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import { TokenType } from "@/types/TokenType";
 
 const ExplorePoolsPage = () => {
   const [isPoolSet, setPool] = useState(true);
   const [isTokensSet, setTokens] = useState(false);
-  const [seachedTokens, setSearchedTokens] = useState<TokenType[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {}, [seachedTokens]);
   return (
     <div className=" w-full">
       <Navbar />
