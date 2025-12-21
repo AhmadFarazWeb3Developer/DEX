@@ -2,20 +2,22 @@
 
 const ContractsAddresses = require("../../deployment/ContractsAddresses.json");
 
-const addresses = {
-  UniswapV2FactoryAddress: ContractsAddresses.UniswapV2FactoryAddress,
-  UniswapV2ERC20Address: ContractsAddresses.UniswapV2ERC20Address,
-  UniswapV2Router02MockAddress: ContractsAddresses.UniswapV2Router02MockAddress,
+const contractsAddresses = ContractsAddresses[31337];
 
-  DaiAddress: ContractsAddresses.DaiAddress,
-  UsdtAddress: ContractsAddresses.UsdtAddress,
-  WethAddress: ContractsAddresses.WethAddress,
-  BnbAddress: ContractsAddresses.BnbAddress,
-  AvalancheAddress: ContractsAddresses.AvalancheAddress,
-  ChainlinkAddress: ContractsAddresses.ChainlinkAddress,
-  PolkadotAddress: ContractsAddresses.PolkadotAddress,
-  UsdcAddress: ContractsAddresses.UsdcAddress,
-  PolygonAddress: ContractsAddresses.PolygonAddress,
+const addresses = {
+  UniswapV2FactoryAddress: contractsAddresses.UniswapV2FactoryAddress,
+  UniswapV2ERC20Address: contractsAddresses.UniswapV2ERC20Address,
+  UniswapV2Router02MockAddress: contractsAddresses.UniswapV2Router02MockAddress,
+
+  DaiAddress: contractsAddresses.DaiAddress,
+  UsdtAddress: contractsAddresses.UsdtAddress,
+  WethAddress: contractsAddresses.WethAddress,
+  BnbAddress: contractsAddresses.BnbAddress,
+  AvalancheAddress: contractsAddresses.AvalancheAddress,
+  ChainlinkAddress: contractsAddresses.ChainlinkAddress,
+  PolkadotAddress: contractsAddresses.PolkadotAddress,
+  UsdcAddress: contractsAddresses.UsdcAddress,
+  PolygonAddress: contractsAddresses.PolygonAddress,
 };
 
 module.exports = addresses;

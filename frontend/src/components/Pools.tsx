@@ -9,10 +9,13 @@ import { calculateTVL } from "../lib/calculateTVL";
 import { formatLargeNumber } from "../lib/formateLargeNumber";
 import { toast } from "sonner";
 
-const Pools = () => {
+interface SearchedValueProp {
+  searchedValue: string;
+}
+const Pools = ({ searchedValue }: SearchedValueProp) => {
   const [pools, setPools] = useState<PoolType[]>([]);
   const [searchedPools, setSearchedPools] = useState<PoolType[]>([]);
-  const [searchValue, setSearchValue] = useState("");
+
   const [loading, setLoading] = useState(true);
 
   const { allPools } = useAllPools();
@@ -60,19 +63,17 @@ const Pools = () => {
     fetchPoolsAndReserves();
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const filterd = pools.filter(
+  useEffect(() => {
+    const filtered = pools.filter(
       (pool) =>
-        pool.pairAddress.toLowerCase().includes(value.toLowerCase()) ||
-        pool.pair.some((pair) =>
-          pair.toLowerCase().includes(value.toLowerCase())
+        pool.pairAddress.toLowerCase().includes(searchedValue.toLowerCase()) ||
+        pool.tokensSymbol.some((symbol) =>
+          symbol.toLowerCase().includes(searchedValue.toLowerCase())
         )
     );
 
-    setSearchedPools(filterd);
-    setSearchValue(value);
-  };
+    setSearchedPools(filtered);
+  }, [searchedValue]);
 
   const truncateAddress = (address: string) =>
     `${address.slice(0, 6)}...${address.slice(-4)}`;
@@ -97,16 +98,6 @@ const Pools = () => {
             <p className="text-gray-400 text-sm">
               Explore and manage your liquidity positions
             </p>
-          </div>
-          <div className="flex flex-row  w-1/2 items-center bg-[#0F2A1D] border border-[#1f3528] rounded-lg px-3 py-1">
-            <input
-              type="text"
-              value={searchValue}
-              onChange={handleInputChange}
-              placeholder="Search Pools"
-              className="bg-transparent text-white outline-none w-full placeholder-gray-400"
-            />
-            <Search strokeWidth={1.5} size={20} className=" text-gray-400" />
           </div>
         </div>
 

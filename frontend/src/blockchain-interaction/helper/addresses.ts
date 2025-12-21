@@ -7,9 +7,6 @@ const deployments = Deployments as ChainDeployments;
 export const getAddressesByChainId = (chainId: number) => {
   const addresses = deployments[chainId];
 
-  console.log("chain id : ", chainId);
-  console.log("addresses : ", addresses);
-
   if (!addresses) {
     throw new Error(`Unsupported chainId: ${chainId}`);
   }

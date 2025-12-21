@@ -18,9 +18,11 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/explore-pools", element: <ExplorePoolPage /> },
       { path: "/create-pool", element: <CreatePoolPage /> },
-      { path: "/add-liquidity", element: <AddLiquidityPage /> },
       { path: "/explore-pools/add-liquidity", element: <AddLiquidityPage /> },
-      { path: "/remove-liquidity", element: <RemoveLiquidityPage /> },
+      {
+        path: "/explore-pools/remove-liquidity",
+        element: <RemoveLiquidityPage />,
+      },
     ],
   },
 ]);

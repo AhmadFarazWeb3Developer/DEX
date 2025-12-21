@@ -26,10 +26,18 @@ const Navbar = () => {
     <div className="flex flex-row justify-between items-center w-full py-2 sm:py-3 ">
       <div className="flex flex-row items-center gap-5 sm:gap-10">
         <div className="font-semibold sm:text-lg text-white sm:hidden">
-          <SquaresExclude size={24} />
+          <SquaresExclude
+            size={24}
+            onClick={() => navigate("/")}
+            className=" cursor-pointer"
+          />
         </div>
         <div className="font-semibold sm:text-lg text-white hidden sm:block">
-          <SquaresExclude size={30} />
+          <SquaresExclude
+            size={30}
+            onClick={() => navigate("/")}
+            className=" cursor-pointer"
+          />
         </div>
 
         <div className="relative flex flex-row items-center font-semibold gap-4 text-xs sm:text-lg">
@@ -73,7 +81,7 @@ const Navbar = () => {
             <div
               onClick={() => {
                 handlePoolSelect("explore");
-                navigate("explore-pools");
+                navigate("/explore-pools");
               }}
               className="px-4 py-2 hover:bg-[#12291a]  transition-colors duration-200 cursor-pointer"
             >
@@ -83,7 +91,7 @@ const Navbar = () => {
             <div
               onClick={() => {
                 handlePoolSelect("create");
-                navigate("create-pool");
+                navigate("/create-pool");
               }}
               className="px-4 py-2 hover:bg-[#12291a]  transition-colors duration-200 cursor-pointer"
             >
@@ -131,7 +139,7 @@ const Navbar = () => {
             <div
               onClick={() => {
                 handleLiqSelect("add");
-                navigate("add-liquidity");
+                navigate("/explore-pools/add-liquidity");
               }}
               className="px-4 py-2 hover:bg-[#12291a] sm:text-lg transition-colors duration-200 cursor-pointer"
             >
@@ -141,7 +149,7 @@ const Navbar = () => {
             <div
               onClick={() => {
                 handleLiqSelect("remove");
-                navigate("remove-liquidity");
+                navigate("/explore-pools/remove-liquidity");
               }}
               className="px-4 py-2  hover:bg-[#12291a] sm:text-lg transition-colors duration-200 cursor-pointer"
             >

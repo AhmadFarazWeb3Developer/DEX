@@ -1,7 +1,7 @@
 import { AppKitProvider, createAppKit } from "@reown/appkit/react";
 
 import {
-  // hardhat,
+  hardhat,
   polygonAmoy,
   bscTestnet,
   arbitrumSepolia,
@@ -21,7 +21,7 @@ createAppKit({
   autoConnect: false,
   adapters: [new EthersAdapter()],
   networks: [
-    // hardhat,
+    hardhat,
     mainnet,
     polygon,
     zksync,

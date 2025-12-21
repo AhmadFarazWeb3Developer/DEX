@@ -14,6 +14,8 @@ const useAllPools = () => {
         return undefined;
       }
 
+      console.log("pairs : ", pairs);
+
       return { pairs };
     } catch (error: any) {
       toast.error(error, {

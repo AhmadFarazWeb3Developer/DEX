@@ -7,11 +7,14 @@ import { formatEther } from "ethers";
 import { CopyIcon, Loader2, Search } from "lucide-react";
 import { toast } from "sonner";
 
-const Tokens = () => {
+interface SearchedValueProp {
+  searchedValue: string;
+}
+
+const Tokens = ({ searchedValue }: SearchedValueProp) => {
   const [loading, setLoading] = useState(true);
   const [allTokensList, setAllTokensList] = useState<TokenType[]>([]);
   const [searchedTokens, setSearchedTokens] = useState<TokenType[]>([]);
-  const [searchValue, setSearchValue] = useState("");
 
   const { allTokens } = useTokens();
 
@@ -31,19 +34,16 @@ const Tokens = () => {
     init();
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  useEffect(() => {
     const filtered = allTokensList.filter(
       (token) =>
-        token.name.toLowerCase().includes(value.toLowerCase()) ||
-        token.address.toLowerCase().includes(value.toLowerCase()) ||
-        token.symbol.toLowerCase().includes(value.toLowerCase())
+        token.name.toLowerCase().includes(searchedValue.toLowerCase()) ||
+        token.address.toLowerCase().includes(searchedValue.toLowerCase()) ||
+        token.symbol.toLowerCase().includes(searchedValue.toLowerCase())
     );
 
-    setSearchValue(value);
     setSearchedTokens(filtered);
-  };
-
+  }, [searchedValue]);
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center gap-2 text-white text-xl">
@@ -55,19 +55,6 @@ const Tokens = () => {
 
   return (
     <div className="flex flex-col w-full space-y-2">
-      <div className=" w-full  flex flex-row items-center justify-end">
-        <div className="flex flex-row  w-1/2 items-center bg-[#0F2A1D] border border-[#1f3528] rounded-lg px-3 py-1 border-1">
-          <input
-            type="text"
-            value={searchValue}
-            onChange={handleInputChange}
-            placeholder="Search Tokens"
-            className="bg-transparent text-white outline-none w-full placeholder-gray-400"
-          />
-          <Search strokeWidth={1.5} size={20} className=" text-gray-400" />
-        </div>
-      </div>
-
       <div className="flex px-4 py-3 text-gray-400 text-sm font-medium border-b border-[#1f3528]">
         <p className="flex-[0.5]">#</p>
         <p className="flex-[2]">Token</p>
