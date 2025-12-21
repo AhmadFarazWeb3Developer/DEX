@@ -8,12 +8,11 @@ import { CopyIcon, Loader2, Search } from "lucide-react";
 import { toast } from "sonner";
 
 const Tokens = () => {
-  const [tokens, setTokens] = useState<TokenType[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [searchValue, setSearchValue] = useState("");
+  const [allTokensList, setAllTokensList] = useState<TokenType[]>([]);
   const [searchedTokens, setSearchedTokens] = useState<TokenType[]>([]);
-
   const { allTokens } = useTokens();
 
   useEffect(() => {
@@ -24,7 +23,9 @@ const Tokens = () => {
         ...token,
         icon: TOKEN_ICONS[token.symbol.toLowerCase()],
       }));
-      setTokens(updatedTokens);
+
+      setAllTokensList(updatedTokens);
+      setSearchedTokens(updatedTokens);
       setLoading(false);
     };
     init();
@@ -33,11 +34,15 @@ const Tokens = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
-    // setSearchedTokens(allTokens.filter((token) => token.name.includes(value)));
-    // setSearchedTokens(value);
+    const filtered = allTokensList.filter(
+      (token) =>
+        token.name.toLowerCase().includes(value.toLowerCase()) ||
+        token.address.toLowerCase().includes(value.toLowerCase()) ||
+        token.symbol.toLowerCase().includes(value.toLowerCase())
+    );
 
     setSearchValue(value);
-
+    setSearchedTokens(filtered);
     console.log("Input value:", value);
   };
 
@@ -74,7 +79,7 @@ const Tokens = () => {
         <p className="flex-[2]">Address</p>
       </div>
 
-      {tokens.map((token, index) => (
+      {searchedTokens.map((token, index) => (
         <div
           key={token.address}
           className="flex items-center px-4 py-3 bg-[#12291a] border border-[#1f3528] rounded-lg hover:bg-[#0B1E13] transition-colors shadow-sm"
