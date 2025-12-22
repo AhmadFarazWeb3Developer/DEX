@@ -1,5 +1,3 @@
-// import ContractsAddresses from "../../deployment/ContractsAddresses.json";
-
 const ContractsAddresses = require("../../deployment/ContractsAddresses.json");
 
 const contractsAddresses = ContractsAddresses[31337];

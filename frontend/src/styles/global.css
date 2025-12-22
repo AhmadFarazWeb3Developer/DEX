@@ -166,3 +166,28 @@ div::-webkit-scrollbar-thumb:hover {
 .animate-shake {
   animation: shake 0.3s ease-in-out;
 }
+
+[data-sonner-toast] {
+  background: #143a24 !important;
+  color: #e6f5ef !important;
+  border: 1px solid #0b1e13 !important;
+  border-radius: 8px !important;
+}
+
+[data-sonner-toast] [data-sonner-action] {
+  background: #143a24 !important;
+  color: #143a24 !important;
+}
+
+[data-sonner-toast] [data-sonner-close] {
+  color: #e6f5ef !important;
+  background: #00c084 !important;
+}
+
+[data-sonner-toast][data-type="error"] svg {
+  color: #ef4444 !important;
+}
+
+[data-sonner-toast][data-type="success"] svg {
+  color: #34d399 !important;
+}

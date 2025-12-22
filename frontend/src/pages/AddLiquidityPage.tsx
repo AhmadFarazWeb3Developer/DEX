@@ -43,7 +43,9 @@ const AddLiquidityPage = () => {
       tokenB.address,
       amountADesired,
       amountBDesired,
-      address
+      address,
+      tokenA.symbol,
+      tokenB.symbol
     );
   };
 

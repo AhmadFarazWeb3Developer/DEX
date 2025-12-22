@@ -33,6 +33,7 @@ const Pools = ({ searchedValue }: SearchedValueProp) => {
 
       let totalTvl: number = 0;
       const pairs: PoolType[] = poolsData.pairs;
+
       const formattedPools: PoolType[] = await Promise.all(
         pairs.map(async (pair) => {
           const poolReserves = await singlePool(pair.pairAddress);
@@ -40,8 +41,11 @@ const Pools = ({ searchedValue }: SearchedValueProp) => {
           const lpTokens = poolReserves?.lpTokens;
 
           const tvl = await calculateTVL(reserves, pair.tokensSymbol);
+          console.log("tvl : ", tvl);
+
           totalTvl += tvl;
 
+          console.log("total tvl : ", totalTvl);
           return {
             pair: pair.pair,
             pairAddress: pair.pairAddress,
@@ -113,7 +117,7 @@ const Pools = ({ searchedValue }: SearchedValueProp) => {
           <div className="bg-[#12291a] rounded-2xl p-6 hover:bg-[#0B1E13] transition-all">
             <div className="text-gray-400 text-sm mb-1">Total TVL</div>
             <div className="text-white text-3xl font-bold">
-              ${parseFloat(formatLargeNumber(totalTVL)).toFixed(4)}
+              ${formatLargeNumber(totalTVL)}
             </div>
           </div>
         </div>
@@ -155,10 +159,10 @@ const Pools = ({ searchedValue }: SearchedValueProp) => {
                             key={idx}
                             className="w-8 h-8 rounded-full bg-[#0b1e13] border-2 border-gray-700 flex items-center justify-center overflow-hidden"
                           >
-                            {TOKEN_ICONS[tokensSymbol] ? (
+                            {TOKEN_ICONS[tokensSymbol.toLowerCase()] ? (
                               <img
-                                src={TOKEN_ICONS[tokensSymbol]}
-                                alt={tokensSymbol}
+                                src={TOKEN_ICONS[tokensSymbol.toLowerCase()]}
+                                alt={tokensSymbol.toLowerCase()}
                                 className="w-full h-full object-cover"
                               />
                             ) : (
@@ -201,7 +205,7 @@ const Pools = ({ searchedValue }: SearchedValueProp) => {
                         {truncateAddress(attribute.pairAddress)}
                       </code>
                       <CopyIcon
-                        size={16}
+                        size={14}
                         className=" cursor-pointer text-gray-400"
                         onClick={() => {
                           navigator.clipboard.writeText(attribute.pairAddress);

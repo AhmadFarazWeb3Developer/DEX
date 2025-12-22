@@ -1,5 +1,6 @@
 import {
   CircleCheckIcon,
+  ClosedCaption,
   InfoIcon,
   Loader2Icon,
   OctagonXIcon,
@@ -14,28 +15,17 @@ const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
-      className="toaster group"
+      richColors={false}
+      className="custom-toaster"
       icons={{
-        success: <CircleCheckIcon className="size-4" />,
-        info: <InfoIcon className="size-4" />,
-        warning: <TriangleAlertIcon className="size-4" />,
-        error: <OctagonXIcon className="size-4" />,
-        loading: <Loader2Icon className="size-4 animate-spin" />,
+        success: <CircleCheckIcon className="w-5 h-5 text-emerald-400" />,
+        info: <InfoIcon className="w-5 h-5 text-emerald-300" />,
+        warning: <TriangleAlertIcon className="w-5 h-5 text-yellow-400" />,
+        error: <OctagonXIcon className="w-5 h-5 text-red-400" />,
+        loading: (
+          <Loader2Icon className="w-5 h-5 animate-spin text-emerald-300" />
+        ),
       }}
-      style={
-        {
-          "--normal-bg": "#0B1E13",
-          "--normal-text": "#E6E6E6",
-          "--normal-border": "#00C084",
-          "--success-bg": "#00C084", // green success
-          "--success-text": "#0B1E13",
-          "--error-bg": "#FF4C4C", // red error
-          "--error-text": "#FFFFFF",
-          "--warning-bg": "#FFC700", // yellow warning
-          "--warning-text": "#0B1E13",
-          "--border-radius": "12px",
-        } as React.CSSProperties
-      }
       {...props}
     />
   );
