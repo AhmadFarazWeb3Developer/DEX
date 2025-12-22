@@ -1,5 +1,5 @@
 import abis from "./helper/abis";
-import { Contract, formatUnits, parseUnits } from "ethers";
+import { Contract, formatUnits, parseUnits, ZeroAddress } from "ethers";
 import useReadInstances from "./helper/useReadInstances";
 import getProvider from "./helper/getProvider";
 import { useAppKitNetwork } from "@reown/appkit/react";
@@ -31,7 +31,7 @@ const useGetAmountOut = () => {
         tokenB
       );
 
-      if (poolAddress === "0x0000000000000000000000000000000000000000") {
+      if (poolAddress === ZeroAddress) {
         return "0";
       }
 

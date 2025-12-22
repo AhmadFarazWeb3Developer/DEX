@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { formatUnits } from "ethers";
+import { formatUnits, ZeroAddress } from "ethers";
 import useReadInstances from "../helper/useReadInstances";
 
 const useLpTokens = () => {
@@ -21,7 +21,7 @@ const useLpTokens = () => {
 
     const pairAddress = await uniswapV2FactoryInstance.getPair(tokenA, tokenB);
 
-    if (pairAddress === "0x0000000000000000000000000000000000000000") {
+    if (pairAddress === ZeroAddress) {
       setLpTokens("0");
 
       return;

@@ -56,36 +56,3 @@ export const calculateTVL = async (
 
   return totalUSD;
 };
-
-// import { formatEther } from "ethers";
-
-// // Hardcoded prices in USD
-// const TOKEN_PRICES: Record<string, number> = {
-//   DAI: 1, // $1
-//   USDC: 1, // $1
-//   USDT: 1, // $1
-//   WETH: 1800, // $1800
-//   BNB: 300, // $300
-//   AVAX: 20, // $20
-//   LINK: 7, // $7
-//   DOT: 6, // $6
-//   MATIC: 1.2, // $1.2
-// };
-
-// export const calculateTVL = async (
-//   reserves: string[],
-//   tokensSymbol: string[]
-// ) => {
-//   let totalUSD = 0;
-
-//   for (let i = 0; i < tokensSymbol.length; i++) {
-//     const symbol = tokensSymbol[i].toUpperCase();
-//     const reserve = reserves[i];
-//     if (!reserve) continue;
-
-//     const price = TOKEN_PRICES[symbol] || 0; // fallback 0 if not found
-//     totalUSD += Number(formatEther(reserve)) * price;
-//   }
-
-//   return totalUSD;
-// };

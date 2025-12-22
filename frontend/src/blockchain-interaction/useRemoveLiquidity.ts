@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useWriteInstances from "./helper/useWriteInstances";
-import { parseUnits } from "ethers";
+import { parseUnits, ZeroAddress } from "ethers";
 import useSigner from "./helper/useSiger";
 import { toast } from "sonner";
 
@@ -35,10 +35,7 @@ const useRemoveLiquidity = () => {
         tokenB
       );
 
-      if (
-        !pairAddress ||
-        pairAddress === "0x0000000000000000000000000000000000000000"
-      )
+      if (!pairAddress || pairAddress === ZeroAddress)
         return toast.error("Pair not found");
 
       const lpToken = UniswapV2ERC20Instance.attach(pairAddress) as any;

@@ -12,7 +12,6 @@ const useWriteInstances = () => {
 
   const {
     UniswapV2FactoryAbi,
-    UniswapV2PairAbi,
     UniswapV2ERC20Abi,
     UniswapV2Router02MockAbi,
 
